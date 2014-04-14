@@ -39,14 +39,14 @@ public class MainActivity extends Activity implements android.view.View.OnClickL
 
     @Override
     public void onClick(android.view.View view) {
-        final android.app.ProgressDialog dialog = new android.app.ProgressDialog(getApplicationContext());
+        final android.app.ProgressDialog dialog = new android.app.ProgressDialog(this);
         dialog.setMessage("Buscando: "+((android.widget.EditText)findViewById(R.id.input)).getText().toString());
         dialog.show();
 
-        android.os.AsyncTask asyncTask = new android.os.AsyncTask<Void, Void, Object>() {
+        new android.os.AsyncTask<Void, Void, Void>() {
 
             @Override
-            protected Object doInBackground(Void... voids) {
+            protected Void doInBackground(Void... voids) {
                 //EXECUTE SOMETHING.
                 try {
                     Thread.sleep(3000);
@@ -56,7 +56,7 @@ public class MainActivity extends Activity implements android.view.View.OnClickL
             }
 
             @Override
-            protected void onPostExecute(Object o) {
+            protected void onPostExecute(Void o) {
                 super.onPostExecute(o);
                 if (dialog.isShowing())
                     dialog.dismiss();
@@ -64,8 +64,6 @@ public class MainActivity extends Activity implements android.view.View.OnClickL
             }
 
 
-        };
-
-        asyncTask.execute();
+        }.execute();
     }
 }

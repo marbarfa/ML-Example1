@@ -1,81 +1,79 @@
-<?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-   <color name="white">#ffffff</color>
-   <color name="almostWhite">#fffff9</color>
-   <color name="black">#000000</color>
-   <color name="red">#ff0000</color>
-   <color name="green">#00ff00</color>
-   <color name="blue">#0000ff</color>
-   <color name="grey">#808080</color>
-   <color name="yellow">#e9f111</color>
-   <color name="skyblue">#d8f1f1</color>
-   <color name="orange">#cf631b</color>
-   <color name="green_bright">#00b200</color>
+    <color name="white">#ffffff</color>
+    <color name="almostWhite">#fffff9</color>
+    <color name="black">#000000</color>
+    <color name="red">#ff0000</color>
+    <color name="green">#00ff00</color>
+    <color name="blue">#0000ff</color>
+    <color name="grey">#808080</color>
+    <color name="yellow">#e9f111</color>
+    <color name="skyblue">#d8f1f1</color>
+    <color name="orange">#cf631b</color>
+    <color name="green_bright">#00b200</color>
 
     <!-- LIGHT -->
-   <color name="lgrey">#cbcbcb</color>
-   <color name="llgrey">#d7d0d0</color>
-   <color name="llgrey2">#e0dada</color>
-   <color name="lyellow">#fcff9d</color>
-   <color name="lblue">#2929a4</color>
-   <color name="lgreen">#1f6b1f</color>
+    <color name="lgrey">#cbcbcb</color>
+    <color name="llgrey">#d7d0d0</color>
+    <color name="llgrey2">#e0dada</color>
+    <color name="lyellow">#fcff9d</color>
+    <color name="lblue">#2929a4</color>
+    <color name="lgreen">#1f6b1f</color>
 
     <!-- DARKS -->
-   <color name="dred">#9a1212</color>
-   <color name="ddred">#6b0c0c</color>
-   <color name="dgrey">#5b5b5b</color>
-   <color name="ddgrey">#363535</color>
-   <color name="dblue">#0000b2</color>
-   <color name="ddblue">#00007c</color>
-   <color name="d3blue">#000056</color>
-   <color name="d4blue">#00003c</color>
-   <color name="d5blue">#00002a</color>
-   <color name="d6blue">#00001d</color>
+    <color name="dred">#9a1212</color>
+    <color name="ddred">#6b0c0c</color>
+    <color name="dgrey">#5b5b5b</color>
+    <color name="ddgrey">#363535</color>
+    <color name="dblue">#0000b2</color>
+    <color name="ddblue">#00007c</color>
+    <color name="d3blue">#000056</color>
+    <color name="d4blue">#00003c</color>
+    <color name="d5blue">#00002a</color>
+    <color name="d6blue">#00001d</color>
 
 
-   <color name="dgreen">#00b200</color>
-   <color name="ddgreen">#f2007c00</color>
-   <color name="d3green">#f2005600</color>
+    <color name="dgreen">#00b200</color>
+    <color name="ddgreen">#f2007c00</color>
+    <color name="d3green">#f2005600</color>
 
-   <color name="dorange">#904512</color>
-   <color name="dyellow">#a3a80b</color>
-   <color name="ddyellow">#727507</color>
-   <color name="dskyblue">#97a8a8</color>
-   <color name="ddskyblue">#697575</color>
+    <color name="dorange">#904512</color>
+    <color name="dyellow">#a3a80b</color>
+    <color name="ddyellow">#727507</color>
+    <color name="dskyblue">#97a8a8</color>
+    <color name="ddskyblue">#697575</color>
 
-   <color name="grey_iposBtn">#323232</color>
-   <color name="dgrey_iposBtn">#232323</color>
-   <color name="ddgrey_iposBtn">#181818</color>
-   <color name="d3grey_iposBtn">#101010</color>
-   <color name="d4grey_iposBtn">#0b0b0b</color>
-   
+    <color name="grey_iposBtn">#323232</color>
+    <color name="dgrey_iposBtn">#232323</color>
+    <color name="ddgrey_iposBtn">#181818</color>
+    <color name="d3grey_iposBtn">#101010</color>
+    <color name="d4grey_iposBtn">#0b0b0b</color>
+
     <!-- OTHERS -->
-   <color name="honeycomb_highlight">#2755b1</color>
-   <color name="candidate_normal">#ff000000</color>
-   <color name="candidate_recommended">#ffe35900</color>
-   <color name="candidate_other">#ff808080</color>
-   <color name="candidate_background">#bbffffff</color>
-   <!-- A really bright Holo shade of blue -->
-   <color name="blue_bright">#ff00ddff</color>
+    <color name="honeycomb_highlight">#2755b1</color>
+    <color name="candidate_normal">#ff000000</color>
+    <color name="candidate_recommended">#ffe35900</color>
+    <color name="candidate_other">#ff808080</color>
+    <color name="candidate_background">#bbffffff</color>
+    <!-- A really bright Holo shade of blue -->
+    <color name="blue_bright">#ff00ddff</color>
 
     <!-- TRANSPARENTS -->
-   <color name="trans_white">#90ffffff</color>
-   <color name="trans_green">#f2248532</color>
-   <color name="trans_black">#80000000</color>
-   <color name="trans_black_dark">#CA000000</color>
-   <color name="trans_light_grey">#aaa9a9a9</color>
-   <color name="trans_grey">#aa808080</color>
-   <color name="trans_dark_grey">#AA5b5b5b</color>
-   <color name="trans_white_line_menu">#40ffffff</color>
-   <color name="trans_black_login">#50000000</color>
-   <color name="trans_yellow">#70e9f111</color>
-   <color name="trans_honeycomb_highlight">#502755b1</color>
-   <color name="trans_light_red">#f0dc1a1a</color>
-   <color name="trans_light_green">#f0248532</color>
-   <color name="trans_blue">#f20055d4</color>
-   <color name="trans_ddblue">#f2002967</color>
-   <color name="trans_blue_light">#a00055d4</color>
-
+    <color name="trans_white">#90ffffff</color>
+    <color name="trans_green">#f2248532</color>
+    <color name="trans_black">#80000000</color>
+    <color name="trans_black_dark">#CA000000</color>
+    <color name="trans_light_grey">#aaa9a9a9</color>
+    <color name="trans_grey">#aa808080</color>
+    <color name="trans_dark_grey">#AA5b5b5b</color>
+    <color name="trans_white_line_menu">#40ffffff</color>
+    <color name="trans_black_login">#50000000</color>
+    <color name="trans_yellow">#70e9f111</color>
+    <color name="trans_honeycomb_highlight">#502755b1</color>
+    <color name="trans_light_red">#f0dc1a1a</color>
+    <color name="trans_light_green">#f0248532</color>
+    <color name="trans_blue">#f20055d4</color>
+    <color name="trans_ddblue">#f2002967</color>
+    <color name="trans_blue_light">#a00055d4</color>
 
 </resources>

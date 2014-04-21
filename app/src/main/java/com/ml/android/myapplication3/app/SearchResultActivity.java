@@ -1,7 +1,9 @@
 package com.ml.android.myapplication3.app;
 
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.widget.ListView;
 import com.ml.android.myapplication3.common.HttpClientHelper;
@@ -21,7 +23,7 @@ public class SearchResultActivity extends android.app.Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.search_results);
 
-        resultList = (ListView)findViewById(R.id.resultlist);
+        resultList = (ListView) findViewById(R.id.resultlist);
 
         //retrive search string
         if (getIntent() != null && getIntent().getExtras() != null) {
@@ -29,16 +31,15 @@ public class SearchResultActivity extends android.app.Activity {
             Bundle extras = getIntent().getExtras();
             String searchString = extras.getString("search_string");
 
-            if (listAdapter == null || (lastSearchString !=null && !lastSearchString.equals(searchString))){
+            if (listAdapter == null || (lastSearchString != null && !lastSearchString.equals(searchString))) {
                 //resultlist
-                lastSearchString = searchString;
-                listAdapter = new SearchAdapter(getApplicationContext());
                 searchForMeliItems(searchString);
-            }else{
+                lastSearchString = searchString;
+            } else {
                 resultList.setAdapter(listAdapter);
             }
 
-        }else if (listAdapter!=null){
+        } else if (listAdapter != null) {
             resultList.setAdapter(listAdapter);
         }
 //        }else if (listAdapter == null){
@@ -47,17 +48,18 @@ public class SearchResultActivity extends android.app.Activity {
 
     }
 
-    private void searchForMeliItems(final String searchString){
+    private void searchForMeliItems(final String searchString) {
         final ProgressDialog dialog = new android.app.ProgressDialog(this);
-        dialog.setMessage("Buscando: "+ searchString);
-        dialog.setCancelable(false);
+        dialog.setMessage("Buscando: " + searchString);
+        dialog.setCancelable(true);
+        dialog.setCanceledOnTouchOutside(true);
         dialog.show();
 
         new android.os.AsyncTask<Void, Void, List<SearchResultRow>>() {
 
             @Override
             protected List<SearchResultRow> doInBackground(Void... voids) {
-                List<SearchResultRow> result = HttpClientHelper.getProductSearch(searchString);
+                List<SearchResultRow> result = HttpClientHelper.getProductSearch(searchString.trim());
                 return result;
             }
 
@@ -66,16 +68,28 @@ public class SearchResultActivity extends android.app.Activity {
                 super.onPostExecute(o);
                 if (dialog.isShowing())
                     dialog.dismiss();
-                listAdapter.setSearchResults(o);
-                resultList.setAdapter(listAdapter);
+                if (o.size() > 0) {
+                    listAdapter = new SearchAdapter(getApplicationContext());
+                    listAdapter.setSearchResults(o);
+                    resultList.setAdapter(listAdapter);
+                } else {
+
+                    AlertDialog.Builder builder = new AlertDialog.Builder(SearchResultActivity.this);
+                    builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            SearchResultActivity.this.finish();
+                        }
+                    });
+                    builder.setMessage("No se han encontrado resultados, intente nuevamente...");
+                    AlertDialog alertDialog = builder.create();
+                    alertDialog.show();
+                }
                 //UPDATE UI
             }
 
 
         }.execute();
     }
-
-
 
 
 }

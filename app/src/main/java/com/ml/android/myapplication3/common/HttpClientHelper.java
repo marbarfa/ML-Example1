@@ -54,6 +54,9 @@ public class HttpClientHelper {
                   for(int i=0; i< arrayOfResults.length(); i++){
                       SearchResultRow row = new SearchResultRow();
                       row.productTitle = (String)arrayOfResults.getJSONObject(i).get("title");
+                      if (row.productTitle.length() > 32){
+                          row.productTitle = row.productTitle.subSequence(0, 32) + "...";
+                      }
                       row.productPrice = Double.parseDouble(arrayOfResults.getJSONObject(i).get("price").toString());
                       rows.add(row);
                   }

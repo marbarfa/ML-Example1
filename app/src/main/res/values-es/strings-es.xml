@@ -8,4 +8,6 @@
     <string name="txt_producto_a_buscar">Indique el producto a buscar :</string>
     <string name="buscar">Buscar</string>
 
+    <string name="title_resultados_busqueda">Resultados...</string>
+
 </resources>

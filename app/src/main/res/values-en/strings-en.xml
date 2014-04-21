@@ -9,4 +9,7 @@
 
     <string name="buscar">Search</string>
 
+
+    <string name="title_resultados_busqueda">Search results...</string>
+
 </resources>

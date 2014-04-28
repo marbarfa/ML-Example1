@@ -1,13 +1,23 @@
-package com.ml.android.myapplication3.common;
+package com.ml.android.melitraining.common;
 
 import android.content.Context;
+import android.content.Intent;
 import android.database.DataSetObserver;
+import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.ListAdapter;
+import android.widget.ProgressBar;
 import android.widget.TextView;
-import com.ml.android.myapplication3.app.R;
+import com.ml.android.melitraining.app.ItemVIPActivity;
+import com.ml.android.melitraining.app.R;
+import com.ml.android.melitraining.app.SearchResultActivity;
+import com.ml.android.melitraining.dto.SearchResultRowDTO;
+import com.ml.android.melitraining.imgutils.BitmapCache;
+import com.ml.android.melitraining.imgutils.ImgDownloader;
+import com.ml.android.melitraining.imgutils.ImgUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,14 +26,23 @@ public class SearchAdapter implements ListAdapter {
 
     private Context context;
 
-    private List<SearchResultRow> searchResults = new ArrayList<SearchResultRow>();
+    public List<SearchResultRowDTO> searchResults = new ArrayList<SearchResultRowDTO>();
+    private BitmapCache bitmapCache;
+    private ImgDownloader imgDownloader;
+    private SearchResultActivity activity;
+    private Bitmap mPlaceholderBitmap;
 
-    public SearchAdapter(Context context) {
+    public SearchAdapter(Context context, SearchResultActivity activity) {
         this.context = context;
+        bitmapCache = new BitmapCache();
+        imgDownloader = new ImgDownloader(bitmapCache);
+        this.activity = activity;
+        mPlaceholderBitmap = ImgUtils.decodeSampledBitmapFromResource(context.getResources(), R.drawable.placeholder,
+                100, 100);
     }
 
 
-    public void setSearchResults(List<SearchResultRow> searchResults) {
+    public void setSearchResults(List<SearchResultRowDTO> searchResults) {
         this.searchResults = searchResults;
     }
 
@@ -76,8 +95,10 @@ public class SearchAdapter implements ListAdapter {
 
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         View rowView = convertView;
+
+        SearchResultRowDTO resultRow = searchResults.get(position);
         // reuse views
         if (rowView == null) {
             rowView = LayoutInflater.from(context).inflate(R.layout.search_row, null);
@@ -85,13 +106,26 @@ public class SearchAdapter implements ListAdapter {
             SearchViewHolder viewHolder = new SearchViewHolder();
             viewHolder.productTitle = (TextView) rowView.findViewById(R.id.product_title);
             viewHolder.productPrice = (TextView) rowView.findViewById(R.id.product_price);
-
+            viewHolder.thumbnail = (ImageView) rowView.findViewById(R.id.product_thumbnail);
             rowView.setTag(viewHolder);
+
+            imgDownloader.loadBitmap(context, resultRow.imageUrl,
+                    mPlaceholderBitmap, viewHolder.thumbnail, 100, 100);
+
+            rowView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent i = new android.content.Intent(activity, ItemVIPActivity.class);
+                    i.putExtra("item_id", searchResults.get(position).itemId);
+                    activity.startActivity(i);
+                }
+            });
+
         }
 
         // fill data
         SearchViewHolder holder = (SearchViewHolder) rowView.getTag();
-        SearchResultRow resultRow = searchResults.get(position);
+
 
         holder.productTitle.setText(resultRow.productTitle);
         holder.productPrice.setText("$" + resultRow.productPrice.toString());
@@ -111,8 +145,10 @@ public class SearchAdapter implements ListAdapter {
 
 
     private class SearchViewHolder {
+        ImageView thumbnail;
         TextView productTitle;
         TextView productPrice;
+        ProgressBar progressBar;
     }
 
 

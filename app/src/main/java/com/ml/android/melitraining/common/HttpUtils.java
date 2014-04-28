@@ -1,4 +1,4 @@
-package com.ml.android.myapplication3.common;
+package com.ml.android.melitraining.common;
 
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;

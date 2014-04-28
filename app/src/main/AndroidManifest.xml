@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.ml.android.myapplication3.app" >
+    package="com.ml.android.melitraining.app" >
 
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -12,7 +12,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="com.ml.android.myapplication3.app.MainActivity"
+            android:name="com.ml.android.melitraining.app.MainActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -22,7 +22,12 @@
         </activity>
 
         <activity
-                android:name="com.ml.android.myapplication3.app.SearchResultActivity"
+                android:name="com.ml.android.melitraining.app.SearchResultActivity"
+                android:label="@string/app_name" >
+        </activity>
+
+        <activity
+                android:name="com.ml.android.melitraining.app.ItemVIPActivity"
                 android:label="@string/app_name" >
         </activity>
 

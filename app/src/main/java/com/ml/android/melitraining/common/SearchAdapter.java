@@ -1,7 +1,6 @@
 package com.ml.android.melitraining.common;
 
 import android.content.Context;
-import android.content.Intent;
 import android.database.DataSetObserver;
 import android.graphics.Bitmap;
 import android.view.LayoutInflater;
@@ -11,7 +10,6 @@ import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import com.ml.android.melitraining.app.ItemVIPActivity;
 import com.ml.android.melitraining.app.R;
 import com.ml.android.melitraining.app.SearchResultActivity;
 import com.ml.android.melitraining.dto.SearchResultRowDTO;
@@ -32,11 +30,12 @@ public class SearchAdapter implements ListAdapter {
     private SearchResultActivity activity;
     private Bitmap mPlaceholderBitmap;
 
-    public SearchAdapter(Context context, SearchResultActivity activity) {
+    private ICallbackHandler<SearchResultRowDTO, Void> itemClickHandler;
+
+    public SearchAdapter(Context context) {
         this.context = context;
         bitmapCache = new BitmapCache();
         imgDownloader = new ImgDownloader(bitmapCache);
-        this.activity = activity;
         mPlaceholderBitmap = ImgUtils.decodeSampledBitmapFromResource(context.getResources(), R.drawable.placeholder,
                 100, 100);
     }
@@ -53,6 +52,10 @@ public class SearchAdapter implements ListAdapter {
     @Override
     public void unregisterDataSetObserver(DataSetObserver dataSetObserver) {
 
+    }
+
+    public void setItemClickHandler(ICallbackHandler<SearchResultRowDTO, Void> itemClickHandler) {
+        this.itemClickHandler = itemClickHandler;
     }
 
     @Override
@@ -98,7 +101,7 @@ public class SearchAdapter implements ListAdapter {
     public View getView(final int position, View convertView, ViewGroup parent) {
         View rowView = convertView;
 
-        SearchResultRowDTO resultRow = searchResults.get(position);
+        final SearchResultRowDTO resultRow = searchResults.get(position);
         // reuse views
         if (rowView == null) {
             rowView = LayoutInflater.from(context).inflate(R.layout.search_row, null);
@@ -115,9 +118,7 @@ public class SearchAdapter implements ListAdapter {
             rowView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent i = new android.content.Intent(activity, ItemVIPActivity.class);
-                    i.putExtra("item_id", searchResults.get(position).itemId);
-                    activity.startActivity(i);
+                    itemClickHandler.apply(resultRow);
                 }
             });
 
@@ -125,8 +126,6 @@ public class SearchAdapter implements ListAdapter {
 
         // fill data
         SearchViewHolder holder = (SearchViewHolder) rowView.getTag();
-
-
         holder.productTitle.setText(resultRow.productTitle);
         holder.productPrice.setText("$" + resultRow.productPrice.toString());
 

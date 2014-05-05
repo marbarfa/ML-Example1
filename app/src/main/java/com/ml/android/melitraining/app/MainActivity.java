@@ -1,14 +1,22 @@
 package com.ml.android.melitraining.app;
 
 import android.app.Activity;
+import android.content.ComponentName;
+import android.content.Context;
+import android.content.Intent;
+import android.content.ServiceConnection;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.ml.android.melitraining.common.HttpUtils;
+import com.ml.android.melitraining.services.MeliBookmarksService;
 
 
 public class MainActivity extends Activity {
+
+    private MeliBookmarksService s;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,5 +40,28 @@ public class MainActivity extends Activity {
     }
 
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Intent intent= new Intent(this, MeliBookmarksService.class);
+        bindService(intent, mConnection,
+                Context.BIND_AUTO_CREATE);
+    }
 
+
+
+    private ServiceConnection mConnection = new ServiceConnection() {
+
+        public void onServiceConnected(ComponentName className,
+                                       IBinder binder) {
+            MeliBookmarksService.MyBinder b = (MeliBookmarksService.MyBinder) binder;
+            s = b.getService();
+            Toast.makeText(MainActivity.this, "Connected", Toast.LENGTH_SHORT)
+                    .show();
+        }
+
+        public void onServiceDisconnected(ComponentName className) {
+            s = null;
+        }
+    };
 }

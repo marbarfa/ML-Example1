@@ -126,6 +126,8 @@ import java.util.List;
  * Created by marbarfa on 4/27/14.
  */
 public class ItemDTO {
+    public String itemId;
+
     public String siteId;
     public String title;
     public String subtitle;

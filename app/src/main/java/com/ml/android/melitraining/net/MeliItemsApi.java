@@ -51,6 +51,7 @@ public class MeliItemsApi {
                 // A Simple JSON Response Read
                 String resultStr = EntityUtils.toString(entity);
                 JSONObject json = new JSONObject(resultStr);
+                itemDTO.itemId = json.getString("id");
                 itemDTO.siteId = json.getString("site_id");
                 itemDTO.title = json.getString("title");
                 itemDTO.subtitle = json.getString("subtitle");

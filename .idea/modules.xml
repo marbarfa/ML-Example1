@@ -2,7 +2,15 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file:///Volumes/marbarfa_HD/Development/workspaces/workspace-MercadoLibre/MyApplication3/app/app.iml" filepath="/Volumes/marbarfa_HD/Development/workspaces/workspace-MercadoLibre/MyApplication3/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/libraries/ATableView/ATableView.iml" filepath="$PROJECT_DIR$/libraries/ATableView/ATableView.iml" />
+      <module fileurl="file://$PROJECT_DIR$/libraries/HoloEverywhere/HoloEverywhere.iml" filepath="$PROJECT_DIR$/libraries/HoloEverywhere/HoloEverywhere.iml" />
+      <module fileurl="file://$PROJECT_DIR$/libraries/HoloEverywhere-preferences/HoloEverywhere-preferences.iml" filepath="$PROJECT_DIR$/libraries/HoloEverywhere-preferences/HoloEverywhere-preferences.iml" />
+      <module fileurl="file://$PROJECT_DIR$/libraries/HorizontalVariableListView/HorizontalVariableListView.iml" filepath="$PROJECT_DIR$/libraries/HorizontalVariableListView/HorizontalVariableListView.iml" />
+      <module fileurl="file://$PROJECT_DIR$/MeliAndroidExample.iml" filepath="$PROJECT_DIR$/MeliAndroidExample.iml" />
+      <module fileurl="file://$PROJECT_DIR$/MeliAndroidExample.iml" filepath="$PROJECT_DIR$/MeliAndroidExample.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Mercadolibre/Mercadolibre.iml" filepath="$PROJECT_DIR$/Mercadolibre/Mercadolibre.iml" />
+      <module fileurl="file://$PROJECT_DIR$/libraries/ViewPagerIndicator/ViewPagerIndicator.iml" filepath="$PROJECT_DIR$/libraries/ViewPagerIndicator/ViewPagerIndicator.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>
 </project>

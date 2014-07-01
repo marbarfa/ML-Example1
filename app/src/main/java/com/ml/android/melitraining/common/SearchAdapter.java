@@ -8,14 +8,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ListAdapter;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import com.ml.android.melitraining.app.R;
 import com.ml.android.melitraining.app.SearchResultActivity;
 import com.ml.android.melitraining.dto.SearchResultRowDTO;
 import com.ml.android.melitraining.imgutils.BitmapCache;
 import com.ml.android.melitraining.imgutils.ImgDownloader;
-import com.ml.android.melitraining.imgutils.ImgUtils;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,8 +35,6 @@ public class SearchAdapter implements ListAdapter {
         this.context = context;
         bitmapCache = new BitmapCache();
         imgDownloader = new ImgDownloader(bitmapCache);
-        mPlaceholderBitmap = ImgUtils.decodeSampledBitmapFromResource(context.getResources(), R.drawable.placeholder,
-                100, 100);
     }
 
 
@@ -60,12 +57,12 @@ public class SearchAdapter implements ListAdapter {
 
     @Override
     public int getCount() {
-          return searchResults.size();
+        return searchResults.size();
     }
 
     @Override
     public Object getItem(int position) {
-        if (searchResults.size() > position){
+        if (searchResults.size() > position) {
             return searchResults.get(position);
         }
         return null;
@@ -112,9 +109,13 @@ public class SearchAdapter implements ListAdapter {
             viewHolder.thumbnail = (ImageView) rowView.findViewById(R.id.product_thumbnail);
             rowView.setTag(viewHolder);
 
-            imgDownloader.loadBitmap(context, resultRow.imageUrl,
-                    mPlaceholderBitmap, viewHolder.thumbnail, 100, 100);
-
+            Picasso
+                    .with(context)
+                    .load(resultRow.imageUrl)
+                    .placeholder(R.drawable.placeholder)
+                    .resize(100, 100)
+                    .centerCrop()
+                    .into(viewHolder.thumbnail);
             rowView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -147,7 +148,6 @@ public class SearchAdapter implements ListAdapter {
         ImageView thumbnail;
         TextView productTitle;
         TextView productPrice;
-        ProgressBar progressBar;
     }
 
 

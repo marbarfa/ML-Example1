@@ -10,4 +10,6 @@
     <string name="title_resultados_busqueda">Resultados...</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
+    <string name="search_items_menu_search">Buscar</string>
+
 </resources>

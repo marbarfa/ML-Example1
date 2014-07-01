@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="com.ml.android.melitraining.app">
 
+    <uses-sdk
+            android:minSdkVersion="8"
+            android:targetSdkVersion="17" />
 
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
@@ -11,14 +14,17 @@
             android:icon="@drawable/ic_launcher"
             android:label="@string/app_name"
             android:theme="@style/AppTheme">
+
         <activity
                 android:name="com.ml.android.melitraining.app.MainActivity"
                 android:label="@string/app_name">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
+
         </activity>
 
         <activity
@@ -28,31 +34,17 @@
 
         <activity
                 android:name="com.ml.android.melitraining.app.ItemVIPActivity"
+                android:parentActivityName="com.ml.android.melitraining.app.SearchResultActivity"
                 android:label="@string/app_name">
+
+            <meta-data
+                    android:name="android.support.PARENT_ACTIVITY"
+                    android:value="com.ml.android.melitraining.app.SearchResultActivity" />
+
             <intent-filter>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-
-        <service
-                android:name="com.ml.android.melitraining.services.MeliBookmarksService"
-                android:exported="false">
-
-        </service>
-
-
-        <service
-                android:name="com.ml.android.melitraining.services.MeliBookmarksService"
-                android:label="bookmarks service">
-        </service>
-
-        <receiver android:name="com.ml.android.melitraining.services.SchedulerReceiver">
-            <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED"/>
-            </intent-filter>
-        </receiver>
-        <receiver android:name="com.ml.android.melitraining.services.StartServiceReceiver">
-        </receiver>
 
 
     </application>

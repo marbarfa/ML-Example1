@@ -1,1 +1,4 @@
-include ':app'
+include ':app',
+        ':libraries:HoloEverywhere-preferences',
+        ':Mercadolibre',
+        ':libraries:HoloEverywhere', ':libraries:ATableView', ':libraries:ViewPagerIndicator', ':libraries:HorizontalVariableListView'

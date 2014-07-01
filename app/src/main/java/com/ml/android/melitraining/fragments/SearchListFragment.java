@@ -24,7 +24,7 @@ import java.util.List;
  * with a GridView.
  * <p/>
  */
-public class SearchListFragment extends Fragment {
+public class SearchListFragment extends android.support.v4.app.Fragment {
 
     private static int offset = 0;
     private static int limit = 15;

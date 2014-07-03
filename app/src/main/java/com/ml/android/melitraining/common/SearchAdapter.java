@@ -109,13 +109,6 @@ public class SearchAdapter implements ListAdapter {
             viewHolder.thumbnail = (ImageView) rowView.findViewById(R.id.product_thumbnail);
             rowView.setTag(viewHolder);
 
-            Picasso
-                    .with(context)
-                    .load(resultRow.imageUrl)
-                    .placeholder(R.drawable.placeholder)
-                    .resize(100, 100)
-                    .centerCrop()
-                    .into(viewHolder.thumbnail);
             rowView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -127,8 +120,16 @@ public class SearchAdapter implements ListAdapter {
 
         // fill data
         SearchViewHolder holder = (SearchViewHolder) rowView.getTag();
-        holder.productTitle.setText(resultRow.productTitle);
-        holder.productPrice.setText("$" + resultRow.productPrice.toString());
+        holder.productTitle.setText(resultRow.title);
+        holder.productPrice.setText("$" + resultRow.price.toString());
+        Picasso
+                .with(context)
+                .load(resultRow.thumbnail)
+                .placeholder(R.drawable.placeholder)
+//                .fit()
+                .resize(100, 100)
+                .centerCrop()
+                .into(holder.thumbnail);
 
         return rowView;
     }

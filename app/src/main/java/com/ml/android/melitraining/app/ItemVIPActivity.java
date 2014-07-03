@@ -5,34 +5,37 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.support.v4.app.TaskStackBuilder;
-import android.view.MenuItem;
+import com.actionbarsherlock.app.SherlockFragmentActivity;
+import com.actionbarsherlock.view.MenuItem;
 import com.ml.android.melitraining.fragments.ItemVIPFragment;
+import com.ml.android.melitraining.net.robospice.ISpiceMgr;
+import com.ml.android.melitraining.net.robospice.MeliRetrofitSpiceService;
+import com.octo.android.robospice.SpiceManager;
 
-public class ItemVIPActivity extends android.app.Activity {
+public class ItemVIPActivity extends SherlockFragmentActivity implements ISpiceMgr {
 
-    private ItemVIPFragment itemVIPFragment;
+    private SpiceManager spiceManager = new SpiceManager(MeliRetrofitSpiceService.class);
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.item_vip_fragment);
-        itemVIPFragment = (ItemVIPFragment)getFragmentManager().findFragmentById(R.id.item_vip_fragment);
+        setContentView(R.layout.item_vip_main);
+        ItemVIPFragment itemVIPFragment = (ItemVIPFragment) getSupportFragmentManager().findFragmentById(R.id.item_vip_fragment);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         //retrive search string
         if (getIntent() != null && getIntent().getExtras() != null) {
-
             Bundle extras = getIntent().getExtras();
+            String title = extras.getString("item_title");
             String itemId = extras.getString("item_id");
-//            loadItem(itemId);
-
-//        } else if (itemDTO != null) {
-//            loadItemToUI();
+            if (itemId != null){
+                itemVIPFragment.loadItem(itemId);
+            }
         }
-//        }else if (listAdapter == null){
-//            listAdapter = new SearchAdapter(getApplicationContext());
-//        }
     }
+
+
 
 
     @Override
@@ -55,6 +58,24 @@ public class ItemVIPActivity extends android.app.Activity {
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onStart() {
+        spiceManager.start(this);
+        super.onStart();
+    }
+
+
+
+    @Override
+    protected void onStop() {
+        spiceManager.shouldStop();
+        super.onStop();
+    }
+
+    public SpiceManager getSpiceManager() {
+        return spiceManager;
     }
 
 

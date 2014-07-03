@@ -51,17 +51,17 @@ public class MeliItemsApi {
                 // A Simple JSON Response Read
                 String resultStr = EntityUtils.toString(entity);
                 JSONObject json = new JSONObject(resultStr);
-                itemDTO.itemId = json.getString("id");
-                itemDTO.siteId = json.getString("site_id");
+//                itemDTO.itemId = json.getString("id");
+//                itemDTO.siteId = json.getString("site_id");
                 itemDTO.title = json.getString("title");
                 itemDTO.subtitle = json.getString("subtitle");
-                itemDTO.categoryId = json.getString("category_id");
+//                itemDTO.categoryId = json.getString("category_id");
                 itemDTO.price = json.getDouble("price");
-                itemDTO.startTime =  sdf.parse(json.getString("start_time"));
-                itemDTO.endtime =  sdf.parse(json.getString("stop_time"));
+//                itemDTO.startTime =  sdf.parse(json.getString("start_time"));
+//                itemDTO.endtime =  sdf.parse(json.getString("stop_time"));
                 itemDTO.thumbnail = json.getString("thumbnail");
                 itemDTO.status = json.getString("status");
-                itemDTO.soldQuantity = json.getString("sold_quantity");
+//                itemDTO.soldQuantity = json.getString("sold_quantity");
                 itemDTO.quantity = json.getString("available_quantity");
                 itemDTO.condition = json.getString("condition");
 
@@ -69,7 +69,7 @@ public class MeliItemsApi {
                 JSONArray arrayOfPictures = json.getJSONArray("pictures");
                 for(int i=0; i<arrayOfPictures.length(); i++){
                     PictureDTO picture = new PictureDTO();
-                    picture.pictureId = arrayOfPictures.getJSONObject(i).getString("id");
+//                    picture.pictureId = arrayOfPictures.getJSONObject(i).getString("id");
                     picture.url = arrayOfPictures.getJSONObject(i).getString("url");
                     itemDTO.pictures.add(picture);
                 }

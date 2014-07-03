@@ -61,20 +61,20 @@ public class MeliSearchApi {
                     JSONArray arrayOfResults = (JSONArray)json.get("results");
                     for(int i=0; i< arrayOfResults.length(); i++){
                         SearchResultRowDTO row = new SearchResultRowDTO();
-                        row.productTitle = (String)arrayOfResults.getJSONObject(i).get("title");
-                        if (row.productTitle.length() > 32){
-                            row.productTitle = row.productTitle.subSequence(0, 32) + "...";
+                        row.title = (String)arrayOfResults.getJSONObject(i).get("title");
+                        if (row.title.length() > 32){
+                            row.title = row.title.subSequence(0, 32) + "...";
                         }
-                        row.productPrice = Double.parseDouble(arrayOfResults.getJSONObject(i).get("price").toString());
-                        row.imageUrl = arrayOfResults.getJSONObject(i).getString("thumbnail");
-                        row.itemId = arrayOfResults.getJSONObject(i).getString("id");
+                        row.price = Double.parseDouble(arrayOfResults.getJSONObject(i).get("price").toString());
+                        row.thumbnail = arrayOfResults.getJSONObject(i).getString("thumbnail");
+                        row.id = arrayOfResults.getJSONObject(i).getString("id");
                         rows.add(row);
                     }
                 }
             }
-            searchResultDTO.rows = rows;
-            searchResultDTO.limit = limit;
-            searchResultDTO.offset = offset;
+            searchResultDTO.results = rows;
+            searchResultDTO.paging.limit = limit;
+            searchResultDTO.paging.offset = offset;
         } catch (ClientProtocolException e) {
             Log.e(TAG, "Error in protocol request");
             e.printStackTrace();

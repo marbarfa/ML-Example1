@@ -1,11 +1,13 @@
 package com.ml.android.melitraining.fragments;
 
+import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.Fragment;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +18,13 @@ import com.ml.android.melitraining.dto.ItemDTO;
 import com.ml.android.melitraining.imgutils.BitmapCache;
 import com.ml.android.melitraining.imgutils.ImgDownloader;
 import com.ml.android.melitraining.imgutils.ImgUtils;
-import com.ml.android.melitraining.net.MeliItemsApi;
+import com.ml.android.melitraining.net.robospice.ISpiceMgr;
+import com.ml.android.melitraining.net.robospice.MeliAPIRequests;
+import com.octo.android.robospice.SpiceManager;
+import com.octo.android.robospice.persistence.DurationInMillis;
+import com.octo.android.robospice.persistence.exception.SpiceException;
+import com.octo.android.robospice.request.listener.RequestListener;
+import com.squareup.picasso.Picasso;
 
 /**
  * A fragment representing a list of Items.
@@ -32,6 +40,16 @@ public class ItemVIPFragment extends Fragment {
     private BitmapCache bitmapCache;
     private Bitmap mPlaceholderBitmap;
 
+    private SpiceManager spiceManager;
+
+    private ImageView img;
+    private TextView title;
+    private TextView price;
+    private TextView buy;
+    private TextView status;
+    private TextView soldAmount;
+    private TextView location;
+
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
@@ -43,7 +61,16 @@ public class ItemVIPFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.item_vip_fragment, container, false);
+        View view = inflater.inflate(R.layout.item_vip_fragment, container, true);
+
+        img = (ImageView) view.findViewById(R.id.item_image);
+        title = (TextView) view.findViewById(R.id.item_title);
+        price = (TextView) view.findViewById(R.id.item_price);
+        buy = (TextView) view.findViewById(R.id.item_buy);
+        status = (TextView) view.findViewById(R.id.item_status);
+        soldAmount = (TextView) view.findViewById(R.id.item_soldAmount);
+        location = (TextView) view.findViewById(R.id.item_location);
+
         return view;
     }
 
@@ -56,82 +83,88 @@ public class ItemVIPFragment extends Fragment {
 
     }
 
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        if (activity instanceof ISpiceMgr) {
+            spiceManager = ((ISpiceMgr) activity).getSpiceManager();
+        }
+    }
 
-    private void loadItem(final String itemId){
+    public void loadItem(String itemId) {
         final ProgressDialog dialog = new ProgressDialog(getActivity());
         dialog.setCancelable(true);
         dialog.setMessage("Loading item...");
         dialog.show();
-        new android.os.AsyncTask<Void, Void, ItemDTO>() {
 
-            @Override
-            protected ItemDTO doInBackground(Void... voids) {
-                if (mPlaceholderBitmap!=null){
-                    mPlaceholderBitmap = ImgUtils
-                            .decodeSampledBitmapFromResource(getResources(), R.drawable.placeholder,
-                                    100, 100);
-                }
-                ItemDTO itemDTO = MeliItemsApi.getItem(itemId);
-                return itemDTO;
-            }
+        if (mPlaceholderBitmap != null) {
+            mPlaceholderBitmap = ImgUtils
+                    .decodeSampledBitmapFromResource(getResources(), R.drawable.placeholder,
+                            100, 100);
+        }
 
-            @Override
-            protected void onPostExecute(ItemDTO o) {
-                super.onPostExecute(o);
-                if (o != null) {
-                    itemDTO = o;
-                    loadItemToUI();
-                    if (dialog.isShowing()) {
-                        dialog.dismiss();
-                    }
-                } else {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                    builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {
-                            getActivity().finish();
+        MeliAPIRequests.GetItemsSpiceRequest itemsRequest =
+                new MeliAPIRequests.GetItemsSpiceRequest(itemId);
+
+        spiceManager.execute(itemsRequest, "items/"+itemId, DurationInMillis.ONE_MINUTE,
+                new RequestListener<ItemDTO>() {
+
+                    public void onRequestFailure(SpiceException spiceException) {
+                        if (dialog.isShowing()) {
+                            dialog.dismiss();
                         }
-                    });
-                    builder.setMessage("Error al cargar el item");
-                    AlertDialog alertDialog = builder.create();
-                    alertDialog.show();
+                        Log.e("ITEMVIPFRAGMENT", "Error al consultar WS"+spiceException.getMessage());
+                    }
+
+                    public void onRequestSuccess(ItemDTO result) {
+                        if (dialog.isShowing()) {
+                            dialog.dismiss();
+                        }
+                        itemDTO = result;
+                        if (itemDTO != null) {
+                            loadItemToUI();
+
+                        } else {
+                            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                            builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    getActivity().finish();
+                                }
+                            });
+                            builder.setMessage("Error al cargar el item");
+                            AlertDialog alertDialog = builder.create();
+                            alertDialog.show();
+                        }
+                    }
                 }
-                //UPDATE UI
-            }
+        );
 
-
-        }.execute();
     }
 
 
-    private void loadItemToUI(){
-
-        ImageView img = (ImageView) getView().findViewById(R.id.item_image);
-        TextView title = (TextView)getView().findViewById(R.id.item_title);
-        TextView price = (TextView)getView().findViewById(R.id.item_price);
-        TextView buy = (TextView)getView().findViewById(R.id.item_buy);
-        TextView status = (TextView)getView().findViewById(R.id.item_status);
-        TextView soldAmount = (TextView)getView().findViewById(R.id.item_soldAmount);
-        TextView location = (TextView)getView().findViewById(R.id.item_location);
+    private void loadItemToUI() {
 
         price.setText(itemDTO.price.toString());
         buy.setText(itemDTO.quantity);
         status.setText(itemDTO.status);
-        soldAmount.setText(itemDTO.soldQuantity);
+        soldAmount.setText(itemDTO.sold_quantity);
         location.setText(itemDTO.condition);
         title.setText(itemDTO.title);
 
-        if (itemDTO!=null && itemDTO.pictures!=null && itemDTO.pictures.size() > 0){
-            imgDownloader.
-                    loadBitmap(getActivity(),
-                            itemDTO.pictures.get(0).url, mPlaceholderBitmap, img, 500, 500);
+        if (itemDTO != null && itemDTO.pictures != null && itemDTO.pictures.size() > 0) {
+            Picasso.with(getActivity()).setDebugging(true);
+            Picasso
+                    .with(getActivity())
+                    .load(itemDTO.pictures.get(0).url)
+                    .placeholder(R.drawable.placeholder)
+                    .resize(500,500)
+                    .centerCrop()
+                    .into(img);
         }
-
+        getView().invalidate();
 //        getView().findViewById(R.id.main_item_container).setVisibility(View.VISIBLE);
 
     }
-
-
-
 
 
 }

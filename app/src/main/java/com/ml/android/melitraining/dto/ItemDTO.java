@@ -1,5 +1,7 @@
 package com.ml.android.melitraining.dto;
 
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+
 import java.util.Date;
 import java.util.List;
 
@@ -125,19 +127,20 @@ import java.util.List;
  *
  * Created by marbarfa on 4/27/14.
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class ItemDTO {
-    public String itemId;
+    public String id;
 
-    public String siteId;
+    public String site_id;
     public String title;
     public String subtitle;
-    public String categoryId;
+    public String category_id;
     public Double price;
     public String quantity;
-    public Date startTime;
-    public Date endtime;
+    public Date start_time;
+    public Date stop_time;
     public String status;
-    public String soldQuantity;
+    public String sold_quantity;
     public String condition;
 
     public String thumbnail;

@@ -12,6 +12,7 @@ import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import com.actionbarsherlock.widget.SearchView;
 import com.ml.android.melitraining.common.HttpUtils;
+import com.squareup.picasso.Picasso;
 
 
 public class MainActivity extends SherlockActivity {
@@ -22,24 +23,24 @@ public class MainActivity extends SherlockActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         findViewById(R.id.button1).setOnClickListener(new android.view.View.OnClickListener() {
             @Override
             public void onClick(android.view.View view) {
-                searchAction();
+                String searchStr = ((TextView) findViewById(R.id.input)).getText().toString();
+                searchAction(searchStr);
             }
         });
-
+        Picasso.with(this).setDebugging(true);
     }
 
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu items for use in the action bar
-        com.actionbarsherlock.view.MenuInflater inflater = getSupportMenuInflater();
-        inflater.inflate(R.menu.home_menu, menu);
-
+        getSupportMenuInflater().inflate(R.menu.home_menu, menu);
         setupSearchActionbar(menu);
-
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -52,10 +53,9 @@ public class MainActivity extends SherlockActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-
             case R.id.search: {
-
-                return true;
+//                 searchAction();
+                return false;
             }
             default:
                 return super.onOptionsItemSelected(item);
@@ -65,6 +65,7 @@ public class MainActivity extends SherlockActivity {
 
     private void setupSearchActionbar(final Menu menu) {
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        menu.findItem(R.id.search).setActionView(new SearchView(this));
         SearchView searchView = (SearchView) menu.findItem(R.id.search).getActionView();
         searchView.setQueryHint("Buscar...");
         SearchableInfo info = searchManager.getSearchableInfo(getComponentName());
@@ -74,6 +75,7 @@ public class MainActivity extends SherlockActivity {
             @Override
             public boolean onQueryTextSubmit(String query) {
                 menu.findItem(R.id.search).collapseActionView();
+                searchAction(query);
                 return false;
             }
 
@@ -99,12 +101,11 @@ public class MainActivity extends SherlockActivity {
     }
 
 
-    private void searchAction() {
+    private void searchAction(String query) {
         ConnectivityManager connMgr = (ConnectivityManager) getSystemService(MainActivity.this.CONNECTIVITY_SERVICE);
         if (HttpUtils.isConnected(connMgr)) {
-            String searchStr = ((TextView) findViewById(R.id.input)).getText().toString();
             android.content.Intent i = new android.content.Intent(MainActivity.this, SearchResultActivity.class);
-            i.putExtra("search_string", searchStr);
+            i.putExtra("search_string", query);
             startActivity(i);
         } else {
             Toast t = Toast.makeText(MainActivity.this, "You are not connected to the internet!", Toast.LENGTH_LONG);

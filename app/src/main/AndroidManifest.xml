@@ -52,5 +52,24 @@
                 android:name="com.ml.android.melitraining.net.robospice.MeliRetrofitSpiceService"
                 android:exported="false">
         </service>
+
+        <!-- BOOKMARK SERVICE -->
+        <service
+                android:name="com.ml.android.melitraining.services.MeliBookmarksService"
+                android:exported="false">
+
+        </service>
+
+        <receiver android:name="com.ml.android.melitraining.services.SchedulerReceiver">
+
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+            </intent-filter>
+
+        </receiver>
+
+        <receiver android:name="com.ml.android.melitraining.services.StartServiceReceiver">
+        </receiver>
+
     </application>
 </manifest>

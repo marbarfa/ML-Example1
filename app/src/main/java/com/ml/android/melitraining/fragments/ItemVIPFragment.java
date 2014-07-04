@@ -11,9 +11,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.ml.android.melitraining.app.R;
+import com.ml.android.melitraining.common.ICallbackHandler;
 import com.ml.android.melitraining.dto.ItemDTO;
 import com.ml.android.melitraining.imgutils.BitmapCache;
 import com.ml.android.melitraining.imgutils.ImgDownloader;
@@ -45,10 +47,12 @@ public class ItemVIPFragment extends Fragment {
     private ImageView img;
     private TextView title;
     private TextView price;
-    private TextView buy;
     private TextView status;
     private TextView soldAmount;
     private TextView location;
+    private Button itemBookmark;
+
+    private ICallbackHandler<ItemDTO, Void> onItemBookmark;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -66,14 +70,27 @@ public class ItemVIPFragment extends Fragment {
         img = (ImageView) view.findViewById(R.id.item_image);
         title = (TextView) view.findViewById(R.id.item_title);
         price = (TextView) view.findViewById(R.id.item_price);
-        buy = (TextView) view.findViewById(R.id.item_buy);
         status = (TextView) view.findViewById(R.id.item_status);
         soldAmount = (TextView) view.findViewById(R.id.item_soldAmount);
         location = (TextView) view.findViewById(R.id.item_location);
+        itemBookmark = (Button) view.findViewById(R.id.item_bookmark);
+
+        itemBookmark.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onItemBookmark.apply(itemDTO);
+                itemBookmark.setSelected(!itemBookmark.isSelected());
+                itemBookmark.setPressed(!itemBookmark.isPressed());
+            }
+        });
 
         return view;
     }
 
+
+    public void setOnItemBookmark(ICallbackHandler<ItemDTO, Void> callbackHandler){
+        this.onItemBookmark = callbackHandler;
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -145,7 +162,7 @@ public class ItemVIPFragment extends Fragment {
     private void loadItemToUI() {
 
         price.setText(itemDTO.price.toString());
-        buy.setText(itemDTO.quantity);
+//        buy.setText(itemDTO.quantity);
         status.setText(itemDTO.status);
         soldAmount.setText(itemDTO.sold_quantity);
         location.setText(itemDTO.condition);

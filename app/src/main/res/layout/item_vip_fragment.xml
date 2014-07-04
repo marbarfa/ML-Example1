@@ -28,26 +28,25 @@
             android:textStyle="bold"/>
 
     <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:layout_marginTop="20dp">
+                  android:layout_marginTop="20dp">
         <TextView style="@style/wrap_content" android:text="Precio: "/>
 
         <TextView style="@style/wrap_content"
                   android:text="$ "
-                  android:textColor="@color/blue" />
+                  android:textColor="@color/blue"/>
 
         <TextView style="@style/wrap_content"
                   android:id="@+id/item_price"
                   android:text="item_price"
-                  android:textColor="@color/blue" />
+                  android:textColor="@color/blue"/>
     </LinearLayout>
 
 
     <Button
-            android:id="@+id/item_buy"
-            android:layout_width="match_parent"
+            android:id="@+id/item_bookmark"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Buy"
-            />
+            android:background="@drawable/drawable_bookmarks"/>
 
 
     <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content">

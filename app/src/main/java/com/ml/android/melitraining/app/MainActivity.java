@@ -1,10 +1,15 @@
 package com.ml.android.melitraining.app;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.app.SearchManager;
 import android.app.SearchableInfo;
 import android.content.Context;
+import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
+import android.os.Environment;
+import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.actionbarsherlock.app.SherlockActivity;
@@ -12,17 +17,23 @@ import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import com.actionbarsherlock.widget.SearchView;
 import com.ml.android.melitraining.common.HttpUtils;
+import com.ml.android.melitraining.services.StartServiceReceiver;
 import com.squareup.picasso.Picasso;
+
+import java.util.Calendar;
 
 
 public class MainActivity extends SherlockActivity {
 
+    // restart service every 30 seconds
+    private static final long REPEAT_TIME = 1000 * 30;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        String s = Environment.getExternalStorageDirectory().getAbsolutePath();
+        Log.i("MAIN-TRAINING", "External Absolute Path: "+s);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         findViewById(R.id.button1).setOnClickListener(new android.view.View.OnClickListener() {
@@ -33,7 +44,25 @@ public class MainActivity extends SherlockActivity {
             }
         });
         Picasso.with(this).setDebugging(true);
+
+        startBookmarksService();
     }
+
+    private void startBookmarksService(){
+        AlarmManager service = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        Intent i = new Intent(this, StartServiceReceiver.class);
+        PendingIntent pending = PendingIntent.getBroadcast(this, 0, i,
+                PendingIntent.FLAG_CANCEL_CURRENT);
+        Calendar cal = Calendar.getInstance();
+        // start 30 seconds after boot completed
+        cal.add(Calendar.SECOND, 30);
+        // fetch every 30 seconds
+        // InexactRepeating allows Android to optimize the energy consumption
+        service.setInexactRepeating(AlarmManager.RTC_WAKEUP,
+                cal.getTimeInMillis(), REPEAT_TIME, pending);
+    }
+
+
 
 
     @Override

@@ -5,6 +5,7 @@
               android:paddingBottom="10dp"
               android:paddingTop="10dp"
               android:orientation="horizontal"
+              android:clickable="true"
               android:gravity="center_vertical"
               android:background="@drawable/drawable_search_row"
               android:layout_marginTop="2dp"
@@ -12,8 +13,9 @@
 
     <ImageView
             android:layout_width="0dp"
-            android:layout_height="90dp"
+            android:layout_height="80dp"
             android:scaleType="centerInside"
+            android:clickable="false"
             android:id="@+id/product_thumbnail"
             android:src="@drawable/placeholder"
             android:layout_weight="0.2"/>
@@ -21,6 +23,7 @@
     <TextView
             style="@style/searchrow_item_txt"
             android:layout_width="0dp"
+            android:clickable="false"
             android:layout_height="wrap_content"
             android:id="@+id/product_title"
             android:text="Titulo del producto"
@@ -33,6 +36,7 @@
             android:id="@+id/product_price"
             style="@style/searchrow_item_txt"
             android:layout_width="0dp"
+            android:clickable="false"
             android:layout_height="match_parent"
             android:layout_weight="0.2"
             android:textSize="@dimen/searchrow_product_price"

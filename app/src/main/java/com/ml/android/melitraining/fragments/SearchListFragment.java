@@ -107,7 +107,7 @@ public class SearchListFragment extends android.support.v4.app.Fragment {
             offset = 0;
         }
 
-        if (this.searchString == null){
+        if (this.searchString == null) {
             return;
         }
 
@@ -117,9 +117,9 @@ public class SearchListFragment extends android.support.v4.app.Fragment {
                 new MeliAPIRequests
                         .GetProductSearchSpiceRequest("MLU", searchString.trim(), offset, limit);
 
-        String spiceRequestCacheKey = ("search/q="+searchStr+"offset="+offset+"limit="+limit);
+        String spiceRequestCacheKey = ("search/q=" + searchStr + "offset=" + offset + "limit=" + limit);
 
-        spiceManager.execute(searchRequest, new RequestListener<SearchResultDTO>() {
+        spiceManager.execute(searchRequest, spiceRequestCacheKey, 1000 * 60 * 2, new RequestListener<SearchResultDTO>() {
 
                     public void onRequestFailure(SpiceException spiceException) {
                         Log.e("Something happened using robospice", spiceException.getMessage());
@@ -139,6 +139,13 @@ public class SearchListFragment extends android.support.v4.app.Fragment {
                     }
                 }
         );
+    }
+
+    public SearchResultRowDTO getFirstResult() {
+        if (listAdapter != null && listAdapter.searchResults != null && listAdapter.searchResults.size() > 0) {
+            return listAdapter.searchResults.get(0);
+        }
+        return null;
     }
 
 

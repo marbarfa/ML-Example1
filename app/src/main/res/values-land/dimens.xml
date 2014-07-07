@@ -5,7 +5,7 @@
 
     <dimen name="main_product_selection_textsize">20sp</dimen>
 
-    <dimen name="searchrow_product_title">22sp</dimen>
-    <dimen name="searchrow_product_price">28sp</dimen>
+    <dimen name="searchrow_product_title">21sp</dimen>
+    <dimen name="searchrow_product_price">25sp</dimen>
 
 </resources>

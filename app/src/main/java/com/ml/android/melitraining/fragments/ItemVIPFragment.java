@@ -87,9 +87,9 @@ public class ItemVIPFragment extends Fragment {
             }
         });
 
-        if (savedInstanceState!=null){
+        if (savedInstanceState != null) {
             itemDTO = (ItemDTO) savedInstanceState.getSerializable("itemDTO");
-            if (itemDTO!=null){
+            if (itemDTO != null) {
                 loadItemToUI();
             }
         }
@@ -98,11 +98,11 @@ public class ItemVIPFragment extends Fragment {
         return view;
     }
 
-    private void bookmarkItem(){
+    private void bookmarkItem() {
         itemBookmark.setSelected(!itemBookmark.isSelected());
-        if (itemBookmark.isSelected()){
+        if (itemBookmark.isSelected()) {
             itemBookmark.setBackgroundResource(android.R.drawable.star_big_on);
-        }else{
+        } else {
             itemBookmark.setBackgroundResource(android.R.drawable.star_big_off);
         }
     }
@@ -113,7 +113,7 @@ public class ItemVIPFragment extends Fragment {
         super.onSaveInstanceState(outState);
     }
 
-    public void setOnItemBookmark(ICallbackHandler<ItemDTO, Void> callbackHandler){
+    public void setOnItemBookmark(ICallbackHandler<ItemDTO, Void> callbackHandler) {
         this.onItemBookmark = callbackHandler;
     }
 
@@ -149,13 +149,13 @@ public class ItemVIPFragment extends Fragment {
         MeliAPIRequests.GetItemsSpiceRequest itemsRequest =
                 new MeliAPIRequests.GetItemsSpiceRequest(itemId);
 
-        spiceManager.execute(itemsRequest, new RequestListener<ItemDTO>() {
+        spiceManager.execute(itemsRequest, itemId, 1000 * 60 * 2, new RequestListener<ItemDTO>() {
 
                     public void onRequestFailure(SpiceException spiceException) {
                         if (dialog.isShowing()) {
                             dialog.dismiss();
                         }
-                        Log.e("ITEMVIPFRAGMENT", "Error al consultar WS"+spiceException.getMessage());
+                        Log.e("ITEMVIPFRAGMENT", "Error al consultar WS" + spiceException.getMessage());
                     }
 
                     public void onRequestSuccess(ItemDTO result) {
@@ -203,7 +203,7 @@ public class ItemVIPFragment extends Fragment {
         }
 
         Bookmark b = bookmarkDAO.getBookmarkByItem(itemDTO.id);
-        if (b!=null){
+        if (b != null) {
             bookmarkItem();
         }
     }

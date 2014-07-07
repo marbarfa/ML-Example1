@@ -112,8 +112,10 @@ public class SearchAdapter implements ListAdapter {
             rowView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    SearchViewHolder viewTag = (SearchViewHolder)view.getTag();
+                    view.setPressed(true);
+                    SearchViewHolder viewTag = (SearchViewHolder) view.getTag();
                     itemClickHandler.apply(viewTag.searchResultRowDTO);
+                    view.setPressed(false);
                 }
             });
 

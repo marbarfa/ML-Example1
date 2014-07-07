@@ -70,7 +70,7 @@ public class SearchAdapter implements ListAdapter {
 
     @Override
     public long getItemId(int position) {
-        return 0;
+        return position;
     }
 
     @Override
@@ -112,7 +112,8 @@ public class SearchAdapter implements ListAdapter {
             rowView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    itemClickHandler.apply(resultRow);
+                    SearchViewHolder viewTag = (SearchViewHolder)view.getTag();
+                    itemClickHandler.apply(viewTag.searchResultRowDTO);
                 }
             });
 
@@ -121,13 +122,14 @@ public class SearchAdapter implements ListAdapter {
         // fill data
         SearchViewHolder holder = (SearchViewHolder) rowView.getTag();
         holder.productTitle.setText(resultRow.title);
+        holder.searchResultRowDTO = resultRow;
         holder.productPrice.setText("$" + resultRow.price.toString());
         Picasso
                 .with(context)
                 .load(resultRow.thumbnail)
                 .placeholder(R.drawable.placeholder)
-//                .fit()
-                .resize(100, 100)
+                .fit()
+//                .resize(100, 100)
                 .centerCrop()
                 .into(holder.thumbnail);
 
@@ -149,6 +151,7 @@ public class SearchAdapter implements ListAdapter {
         ImageView thumbnail;
         TextView productTitle;
         TextView productPrice;
+        SearchResultRowDTO searchResultRowDTO;
     }
 
 

@@ -1,5 +1,6 @@
 package com.ml.android.melitraining.net.robospice;
 
+import org.codehaus.jackson.map.DeserializationConfig;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.type.JavaType;
 import retrofit.converter.ConversionException;
@@ -19,6 +20,9 @@ public class JacksonConverter implements Converter{
 
     public JacksonConverter(ObjectMapper objectMapper) {
         this.objectMapper = objectMapper;
+        this.objectMapper.setPropertyNamingStrategy(new UnderscorePropertyNamingStrategy());
+        this.objectMapper.configure(DeserializationConfig.Feature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+        this.objectMapper.configure(DeserializationConfig.Feature.USE_ANNOTATIONS, false);
     }
 
     @Override

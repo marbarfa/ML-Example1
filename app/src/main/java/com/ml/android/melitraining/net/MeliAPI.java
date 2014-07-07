@@ -3,6 +3,7 @@ package com.ml.android.melitraining.net;
 import com.ml.android.melitraining.dto.ItemDTO;
 import com.ml.android.melitraining.dto.SearchResultDTO;
 import retrofit.http.GET;
+import retrofit.http.Headers;
 import retrofit.http.Path;
 import retrofit.http.Query;
 
@@ -13,6 +14,9 @@ public final class MeliAPI {
 
     public interface ItemsAPI {
 
+        @Headers({
+                "Accept-Encoding: application/identity",
+        })
         @GET("/items/{itemId}")
         public ItemDTO getItem(@Path("itemId") String itemId);
     }

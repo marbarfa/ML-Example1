@@ -2,6 +2,7 @@ package com.ml.android.melitraining.app;
 
 
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.support.v4.app.TaskStackBuilder;
@@ -23,11 +24,18 @@ public class ItemVIPActivity extends SherlockFragmentActivity implements ISpiceM
 
     private SpiceManager spiceManager = new SpiceManager(MeliRetrofitSpiceService.class);
     private BookmarksDAO bookmarkDAO;
+    private String itemId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.item_vip_main);
+
+
+        if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE){
+            finish();
+        }
+
         ItemVIPFragment itemVIPFragment = (ItemVIPFragment) getSupportFragmentManager().findFragmentById(R.id.item_vip_fragment);
 
         bookmarkDAO = new BookmarksDAO(getApplicationContext());
@@ -37,9 +45,9 @@ public class ItemVIPActivity extends SherlockFragmentActivity implements ISpiceM
         if (getIntent() != null && getIntent().getExtras() != null) {
             Bundle extras = getIntent().getExtras();
 //            String title = extras.getString("item_title");
-            String itemId = extras.getString("item_id");
+            itemId = extras.getString("item_id");
             if (itemId != null) {
-                itemVIPFragment.loadItem(itemId);
+                itemVIPFragment.loadItem(itemId, this);
             }
         }
 
@@ -66,6 +74,11 @@ public class ItemVIPActivity extends SherlockFragmentActivity implements ISpiceM
         });
     }
 
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        outState.putSerializable("item_id", itemId);
+        super.onSaveInstanceState(outState);
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

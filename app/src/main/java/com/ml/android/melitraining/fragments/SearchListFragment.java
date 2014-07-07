@@ -16,7 +16,6 @@ import com.ml.android.melitraining.dto.SearchResultRowDTO;
 import com.ml.android.melitraining.net.robospice.ISpiceMgr;
 import com.ml.android.melitraining.net.robospice.MeliAPIRequests;
 import com.octo.android.robospice.SpiceManager;
-import com.octo.android.robospice.persistence.DurationInMillis;
 import com.octo.android.robospice.persistence.exception.SpiceException;
 import com.octo.android.robospice.request.listener.RequestListener;
 
@@ -120,8 +119,7 @@ public class SearchListFragment extends android.support.v4.app.Fragment {
 
         String spiceRequestCacheKey = ("search/q="+searchStr+"offset="+offset+"limit="+limit);
 
-        spiceManager.execute(searchRequest, spiceRequestCacheKey, DurationInMillis.ONE_MINUTE,
-                new RequestListener<SearchResultDTO>() {
+        spiceManager.execute(searchRequest, new RequestListener<SearchResultDTO>() {
 
                     public void onRequestFailure(SpiceException spiceException) {
                         Log.e("Something happened using robospice", spiceException.getMessage());

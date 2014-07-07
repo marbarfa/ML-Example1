@@ -6,11 +6,13 @@ import android.app.SearchManager;
 import android.app.SearchableInfo;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
-import android.widget.TextView;
+import android.view.View;
+import android.widget.AutoCompleteTextView;
 import android.widget.Toast;
 import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.Menu;
@@ -27,6 +29,7 @@ public class MainActivity extends SherlockActivity {
 
     // restart service every 30 seconds
     private static final long REPEAT_TIME = 1000 * 30;
+    private static final String SEARCH_QUERY_KEY = "SEARCH_QUERY";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,14 +41,34 @@ public class MainActivity extends SherlockActivity {
 
         findViewById(R.id.button1).setOnClickListener(new android.view.View.OnClickListener() {
             @Override
-            public void onClick(android.view.View view) {
-                String searchStr = ((TextView) findViewById(R.id.input)).getText().toString();
+            public void onClick(View view) {
+                String searchStr = ((AutoCompleteTextView) findViewById(R.id.input)).getText().toString();
+                saveSearchQuery(searchStr);
                 searchAction(searchStr);
             }
         });
         Picasso.with(this).setDebugging(true);
 
+        String lastQuery = getSearchQuery();
+        if (lastQuery != null){
+            ((AutoCompleteTextView)findViewById(R.id.input)).setCompletionHint(lastQuery);
+        }
+
         startBookmarksService();
+    }
+
+
+    private void saveSearchQuery(String query){
+        SharedPreferences sp = this.getSharedPreferences(SEARCH_QUERY_KEY, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sp.edit();
+        editor.putString(SEARCH_QUERY_KEY, query);
+        editor.commit();
+    }
+
+    private String getSearchQuery(){
+        SharedPreferences sp = this.getSharedPreferences(SEARCH_QUERY_KEY, Context.MODE_PRIVATE);
+        String query = sp.getString(SEARCH_QUERY_KEY, null);
+        return query;
     }
 
     private void startBookmarksService(){

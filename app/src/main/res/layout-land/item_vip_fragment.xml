@@ -8,6 +8,8 @@
               android:orientation="vertical">
 
 
+
+
     <TextView style="@style/wrap_content"
               android:id="@+id/item_title"
               android:text="item_title"
@@ -33,6 +35,7 @@
 
         <TextView style="@style/wrap_content"
                   android:text="$ "
+                  android:layout_marginLeft="100dp"
                   android:textColor="@color/blue" />
 
         <TextView style="@style/wrap_content"
@@ -42,11 +45,24 @@
     </LinearLayout>
 
 
-    <Button
-            android:id="@+id/item_bookmark"
+    <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/drawable_bookmarks"/>
+            android:orientation="horizontal">
+
+        <TextView style="@style/wrap_content"
+                  android:text="Bookmark:" />
+
+        <Button
+                android:id="@+id/item_bookmark"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_marginLeft="75dp"
+                android:background="@drawable/drawable_bookmarks"/>
+
+    </LinearLayout>
+
+
 
 
     <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content">
@@ -54,8 +70,8 @@
         <TextView
                 android:id="@+id/item_status"
                 style="@style/wrap_content"
-                android:text="status"
-                />
+                android:layout_marginLeft="100dp"
+                android:text="status" />
     </LinearLayout>
 
     <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content">
@@ -63,8 +79,8 @@
         <TextView
                 android:id="@+id/item_soldAmount"
                 style="@style/wrap_content"
-                android:text="sold_amount"
-                />
+                android:layout_marginLeft="25dp"
+                android:text="sold_amount"/>
     </LinearLayout>
 
     <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content">
@@ -73,8 +89,7 @@
                 android:id="@+id/item_location"
                 style="@style/wrap_content"
                 android:text="sold_quantity"
-                android:layout_marginTop="82dp"
-                />
+                android:layout_marginLeft="30dp" />
     </LinearLayout>
 
 

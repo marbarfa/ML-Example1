@@ -1,36 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
-              android:layout_height="100dp"
+              android:layout_height="120dp"
               android:paddingBottom="10dp"
               android:paddingTop="10dp"
               android:orientation="horizontal"
               android:gravity="center_vertical"
-              android:layout_marginTop="10dp"
-              android:layout_marginBottom="10dp">
+              android:background="@drawable/drawable_search_row"
+              android:layout_marginTop="2dp"
+              android:layout_marginBottom="2dp">
 
     <ImageView
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="90dp"
             android:scaleType="centerInside"
             android:id="@+id/product_thumbnail"
+            android:src="@drawable/placeholder"
             android:layout_weight="0.2"/>
 
     <TextView
             style="@style/searchrow_item_txt"
             android:layout_width="0dp"
-              android:layout_height="match_parent"
-              android:id="@+id/product_title"
-              android:layout_marginLeft="10dp"
-              android:layout_weight="0.7"/>
+            android:layout_height="wrap_content"
+            android:id="@+id/product_title"
+            android:text="Titulo del producto"
+            android:layout_marginLeft="10dp"
+            android:textSize="@dimen/searchrow_product_title"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="0.7"/>
 
     <TextView
+            android:id="@+id/product_price"
             style="@style/searchrow_item_txt"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-              android:id="@+id/product_price"
-              android:layout_weight="0.2"
-              android:layout_marginRight="10dp"/>
+            android:layout_weight="0.2"
+            android:textSize="@dimen/searchrow_product_price"
+            android:layout_marginRight="10dp"/>
 
 </LinearLayout>

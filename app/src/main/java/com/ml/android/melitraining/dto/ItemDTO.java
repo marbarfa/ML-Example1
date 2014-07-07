@@ -2,6 +2,7 @@ package com.ml.android.melitraining.dto;
 
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
@@ -128,7 +129,7 @@ import java.util.List;
  * Created by marbarfa on 4/27/14.
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class ItemDTO {
+public class ItemDTO implements Serializable{
     public String id;
 
     public String site_id;

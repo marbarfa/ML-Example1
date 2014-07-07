@@ -16,11 +16,11 @@
             android:layout_weight="0.7"
             class="com.ml.android.melitraining.fragments.SearchListFragment"/>
 
-    <!--<fragment-->
-            <!--android:id="@+id/item_framgment_detail"-->
-            <!--android:layout_width="0dp"-->
-            <!--android:layout_height="match_parent"-->
-            <!--android:layout_weight="0.3"-->
-            <!--class="com.ml.android.melitraining.fragments.ItemVIPFragment"/>-->
+    <fragment
+            android:id="@+id/item_framgment_detail"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.3"
+            class="com.ml.android.melitraining.fragments.ItemVIPFragment"/>
 
 </LinearLayout>

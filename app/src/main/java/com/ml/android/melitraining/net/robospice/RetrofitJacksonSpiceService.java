@@ -1,6 +1,7 @@
 package com.ml.android.melitraining.net.robospice;
 
 import android.app.Application;
+import android.os.Environment;
 import com.octo.android.robospice.persistence.CacheManager;
 import com.octo.android.robospice.persistence.exception.CacheCreationException;
 import com.octo.android.robospice.persistence.retrofit.RetrofitObjectPersisterFactory;
@@ -32,7 +33,7 @@ public abstract class RetrofitJacksonSpiceService extends RetrofitSpiceService {
     }
 
     public File getCacheFolder() {
-        return null;
+        return new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "melitraininig/cache");
     }
 
 }

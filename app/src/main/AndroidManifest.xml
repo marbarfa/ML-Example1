@@ -31,6 +31,7 @@
 
         <activity
                 android:name="com.ml.android.melitraining.app.SearchResultActivity"
+                android:parentActivityName="com.ml.android.melitraining.app.MainActivity"
                 android:label="@string/app_name">
         </activity>
 

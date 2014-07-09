@@ -4,6 +4,8 @@ package com.ml.android.melitraining.app;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.NavUtils;
 import android.support.v4.app.TaskStackBuilder;
 import android.util.Log;
@@ -24,74 +26,130 @@ import java.sql.SQLException;
 
 public class SearchResultActivity extends SherlockFragmentActivity implements ISpiceMgr {
 
-    private static SearchListFragment searchListFragment;
+    private enum EnumItemState {
+        list,
+        detail;
+    }
+
+    private SearchListFragment searchListFragment;
     private ItemVIPFragment itemVIPFragment;
     private SpiceManager spiceManager = new SpiceManager(MeliRetrofitSpiceService.class);
     private BookmarksDAO bookmarkDAO;
+
+    private String searchString;
+    private EnumItemState state;
+
 
     @Override
     protected void onCreate(android.os.Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.search_results_main);
+        state = EnumItemState.list;
 
         bookmarkDAO = new BookmarksDAO(getApplicationContext());
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        searchListFragment = (SearchListFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_search_list);
-        itemVIPFragment = (ItemVIPFragment) getSupportFragmentManager().findFragmentById(R.id.item_framgment_detail);
+        if (getIntent() != null && getIntent().getExtras() != null) {
+            Bundle extras = getIntent().getExtras();
+            this.searchString = extras.getString("search_string");
+        }
+
+        setUpViews();
+
+        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            searchListFragment.searchMeliItems(searchString);
+        }
+
+    }
+
+    private void setUpViews() {
+        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            searchListFragment = (SearchListFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_search_list);
+            itemVIPFragment = (ItemVIPFragment) getSupportFragmentManager().findFragmentById(R.id.item_framgment_detail);
+        }else{
+            searchListFragment = new SearchListFragment();
+            Bundle b = new Bundle();
+            b.putString("search_string", searchString);
+            searchListFragment.setArguments(b);
+
+            FragmentManager fm = getSupportFragmentManager();
+            FragmentTransaction ft = fm.beginTransaction();
+            ft.replace(R.id.search_results_container, searchListFragment);
+            ft.disallowAddToBackStack();
+            ft.commit();
+
+            itemVIPFragment = new ItemVIPFragment();
+            itemVIPFragment.setSpiceManager(spiceManager);
+        }
+
 
         searchListFragment.setOnItemClick(new ICallbackHandler<SearchResultRowDTO, Void>() {
             @Override
             public Void apply(SearchResultRowDTO row) {
-                if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
-                    itemVIPFragment.loadItem(row.id, SearchResultActivity.this);
-                } else {
-                    Intent i = new Intent(SearchResultActivity.this, ItemVIPActivity.class);
-                    i.putExtra("item_id", row.id);
-                    i.putExtra("item_title", row.title);
-                    startActivity(i);
+                navigateToDetail(row);
+                return null;
+            }
+        });
+        itemVIPFragment.setOnItemBookmark(new ICallbackHandler<ItemDTO, Void>() {
+            @Override
+            public Void apply(ItemDTO item) {
+                try {
+                    Bookmark b = bookmarkDAO.getBookmarkByItem(item.id);
+                    if (b != null) {
+                        bookmarkDAO.getDAO().delete(b);
+                    } else {
+                        b = new Bookmark();
+                        b.setChecked(false);
+                        b.setItemId(item.id);
+                        b.setItemEndDate(item.stop_time);
+
+                        bookmarkDAO.getDAO().create(b);
+                    }
+                } catch (SQLException e) {
+                    Log.e("ItemVIPActivity", "Error deleting of saving bookmark", e);
                 }
                 return null;
             }
         });
+    }
 
-        if (getIntent() != null && getIntent().getExtras() != null) {
 
-            Bundle extras = getIntent().getExtras();
-            String searchString = extras.getString("search_string");
-            searchListFragment.searchMeliItems(searchString);
-        }
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    private void navigateToListItem(){
+        FragmentManager fm = SearchResultActivity.this.getSupportFragmentManager();
+        FragmentTransaction ft = fm.beginTransaction();
+        ft.remove(itemVIPFragment);
+        ft.add(R.id.search_results_container, searchListFragment);
+        ft.addToBackStack(null);
+        ft.commit();
 
-        if (itemVIPFragment != null) {
-//            if (searchListFragment.getFirstResult()!=null){
-//                itemVIPFragment.loadItem(searchListFragment.getFirstResult().id, this);
-//            }
-            itemVIPFragment.setOnItemBookmark(new ICallbackHandler<ItemDTO, Void>() {
-                @Override
-                public Void apply(ItemDTO item) {
-                    try {
-                        Bookmark b = bookmarkDAO.getBookmarkByItem(item.id);
-                        if (b != null) {
-                            bookmarkDAO.getDAO().delete(b);
-                        } else {
-                            b = new Bookmark();
-                            b.setChecked(false);
-                            b.setItemId(item.id);
-                            b.setItemEndDate(item.stop_time);
+        state = EnumItemState.list;
+        searchListFragment.searchMeliItems(this.searchString);
 
-                            bookmarkDAO.getDAO().create(b);
-                        }
-                    } catch (SQLException e) {
-                        Log.e("ItemVIPActivity", "Error deleting of saving bookmark", e);
-                    }
-                    return null;
-                }
-            });
+    }
+
+    private void navigateToDetail(SearchResultRowDTO row) {
+        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            itemVIPFragment.loadItem(row.id, SearchResultActivity.this);
+        } else {
+            FragmentManager fm = getSupportFragmentManager();
+            FragmentTransaction ft = fm.beginTransaction();
+            ft.replace(R.id.search_results_container, itemVIPFragment);
+            ft.addToBackStack(null);
+            ft.commit();
+
+            itemVIPFragment.loadItem(row.id, this);
+            state = EnumItemState.detail;
         }
     }
 
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        if (state == EnumItemState.detail &&
+                getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT){
+            navigateToListItem();
+            return true;
+        }
         switch (item.getItemId()) {
             // Respond to the action bar's Up/Home button
             case android.R.id.home:

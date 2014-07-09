@@ -1,26 +1,12 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:tools="http://schemas.android.com/tools"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:paddingLeft="@dimen/activity_horizontal_margin"
-                android:paddingRight="@dimen/activity_horizontal_margin"
-                android:paddingTop="@dimen/activity_vertical_margin"
-                android:orientation="horizontal"
-                tools:context="com.ml.android.melitraining.app.MainActivity">
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:paddingLeft="@dimen/activity_horizontal_margin"
+              android:paddingRight="@dimen/activity_horizontal_margin"
+              android:paddingTop="@dimen/activity_vertical_margin"
+              android:orientation="horizontal"
+              android:id="@+id/search_results_container"
+              tools:context="com.ml.android.melitraining.app.MainActivity">
 
-
-    <fragment
-            android:id="@+id/fragment_search_list"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="0.7"
-            class="com.ml.android.melitraining.fragments.SearchListFragment"/>
-
-    <!--<fragment-->
-            <!--android:id="@+id/item_framgment_detail"-->
-            <!--android:layout_width="0dp"-->
-            <!--android:layout_height="match_parent"-->
-            <!--android:layout_weight="0.3"-->
-            <!--class="com.ml.android.melitraining.fragments.ItemVIPFragment"/>-->
-
-</LinearLayout>
+</FrameLayout>

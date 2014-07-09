@@ -19,8 +19,6 @@ import com.ml.android.melitraining.common.ICallbackHandler;
 import com.ml.android.melitraining.database.dao.BookmarksDAO;
 import com.ml.android.melitraining.database.entities.Bookmark;
 import com.ml.android.melitraining.dto.ItemDTO;
-import com.ml.android.melitraining.imgutils.BitmapCache;
-import com.ml.android.melitraining.imgutils.ImgDownloader;
 import com.ml.android.melitraining.imgutils.ImgUtils;
 import com.ml.android.melitraining.net.robospice.ISpiceMgr;
 import com.ml.android.melitraining.net.robospice.MeliAPIRequests;
@@ -39,8 +37,8 @@ import com.squareup.picasso.Picasso;
 public class ItemVIPFragment extends Fragment {
 
     private static ItemDTO itemDTO;
-    private ImgDownloader imgDownloader;
-    private BitmapCache bitmapCache;
+//    private ImgDownloader imgDownloader;
+//    private BitmapCache bitmapCache;
     private Bitmap mPlaceholderBitmap;
 
     private SpiceManager spiceManager;
@@ -56,20 +54,12 @@ public class ItemVIPFragment extends Fragment {
     private ICallbackHandler<ItemDTO, Void> onItemBookmark;
     private BookmarksDAO bookmarkDAO;
 
-    /**
-     * Mandatory empty constructor for the fragment manager to instantiate the
-     * fragment (e.g. upon screen orientation changes).
-     */
-    public ItemVIPFragment() {
-    }
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
-
-        View view = inflater.inflate(R.layout.item_vip_fragment, container, true);
+        View view = inflater.inflate(R.layout.item_vip_fragment, container, false);
 
         img = (ImageView) view.findViewById(R.id.item_image);
         title = (TextView) view.findViewById(R.id.item_title);
@@ -89,11 +79,11 @@ public class ItemVIPFragment extends Fragment {
 
         if (savedInstanceState != null) {
             itemDTO = (ItemDTO) savedInstanceState.getSerializable("itemDTO");
-            if (itemDTO != null) {
-                loadItemToUI();
-            }
         }
 
+        if (itemDTO != null) {
+            loadItemToUI();
+        }
 
         return view;
     }
@@ -113,17 +103,14 @@ public class ItemVIPFragment extends Fragment {
         super.onSaveInstanceState(outState);
     }
 
+    public void setSpiceManager(SpiceManager spiceManager) {
+        this.spiceManager = spiceManager;
+    }
+
     public void setOnItemBookmark(ICallbackHandler<ItemDTO, Void> callbackHandler) {
         this.onItemBookmark = callbackHandler;
     }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        bitmapCache = new BitmapCache();
-        imgDownloader = new ImgDownloader(bitmapCache);
-
-    }
 
     @Override
     public void onAttach(Activity activity) {
@@ -163,9 +150,8 @@ public class ItemVIPFragment extends Fragment {
                             dialog.dismiss();
                         }
                         itemDTO = result;
-                        if (itemDTO != null) {
+                        if (itemDTO != null && getActivity() !=null) {
                             loadItemToUI();
-
                         } else {
                             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                             builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {

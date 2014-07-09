@@ -30,11 +30,11 @@ import java.util.ArrayList;
  */
 public class SearchListFragment extends android.support.v4.app.Fragment {
 
-    private static int offset = 0;
-    private static int limit = 15;
+    private int offset = 0;
+    private int limit = 15;
+    private SearchAdapter listAdapter;
 
     private AbsListView mListView;
-    private static SearchAdapter listAdapter;
     private ProgressBar progressBar;
 
     private String searchString;
@@ -42,13 +42,7 @@ public class SearchListFragment extends android.support.v4.app.Fragment {
 
     private SpiceManager spiceManager;
 
-
-    /**
-     * Mandatory empty constructor for the fragment manager to instantiate the
-     * fragment (e.g. upon screen orientation changes).
-     */
-    public SearchListFragment() {
-    }
+    private ICallbackHandler<SearchResultRowDTO, Void> onItemClick;
 
 
     @Override
@@ -81,13 +75,27 @@ public class SearchListFragment extends android.support.v4.app.Fragment {
                 }
             }
         });
+
         if (listAdapter == null) {
             listAdapter = new SearchAdapter(getActivity());
-        } else {
+            setAdapterItemClick();
+            if (getSearchString() != null) {
+                searchMeliItems(getSearchString());
+            }
+        }else if (listAdapter.searchResults.size() > 0){
             mListView.setAdapter(listAdapter);
         }
 
         return view;
+    }
+
+
+
+    private String getSearchString() {
+        if (getArguments() != null) {
+            return getArguments().getString("search_string");
+        }
+        return null;
     }
 
     @Override
@@ -99,6 +107,7 @@ public class SearchListFragment extends android.support.v4.app.Fragment {
     }
 
     public void searchMeliItems(String searchStr) {
+
         if (searchStr != null && (this.searchString == null ||
                 !this.searchString.equals(searchStr))) {
             //reset saved params.
@@ -119,7 +128,7 @@ public class SearchListFragment extends android.support.v4.app.Fragment {
 
         String spiceRequestCacheKey = ("search/q=" + searchStr + "offset=" + offset + "limit=" + limit);
 
-        spiceManager.execute(searchRequest, spiceRequestCacheKey, 1000 * 60 * 2, new RequestListener<SearchResultDTO>() {
+        spiceManager.execute(searchRequest, spiceRequestCacheKey, 1000 * 60, new RequestListener<SearchResultDTO>() {
 
                     public void onRequestFailure(SpiceException spiceException) {
                         Log.e("Something happened using robospice", spiceException.getMessage());
@@ -150,7 +159,14 @@ public class SearchListFragment extends android.support.v4.app.Fragment {
 
 
     public void setOnItemClick(ICallbackHandler<SearchResultRowDTO, Void> callback) {
-        this.listAdapter.setItemClickHandler(callback);
+        this.onItemClick = callback;
+        setAdapterItemClick();
+    }
+
+    private void setAdapterItemClick() {
+        if (listAdapter != null && onItemClick != null) {
+            listAdapter.setItemClickHandler(onItemClick);
+        }
     }
 
 

@@ -3,6 +3,7 @@ package com.ml.android.melitraining.common;
 import android.content.Context;
 import android.database.DataSetObserver;
 import android.graphics.Bitmap;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -126,14 +127,18 @@ public class SearchAdapter implements ListAdapter {
         holder.productTitle.setText(resultRow.title);
         holder.searchResultRowDTO = resultRow;
         holder.productPrice.setText("$" + resultRow.price.toString());
-        Picasso
-                .with(context)
-                .load(resultRow.thumbnail)
-                .placeholder(R.drawable.placeholder)
-                .fit()
+        try{
+            Picasso
+                    .with(context)
+                    .load(resultRow.thumbnail)
+                    .placeholder(R.drawable.placeholder)
+                    .fit()
 //                .resize(100, 100)
-                .centerCrop()
-                .into(holder.thumbnail);
+                    .centerCrop()
+                    .into(holder.thumbnail);
+        }catch (Throwable t ){
+            Log.e("SearchAdapter", "Error loading image", t);
+        }
 
         return rowView;
     }

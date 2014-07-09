@@ -7,12 +7,14 @@
 
 
     <dimen name="searchrow_height">100dp</dimen>
-    <dimen name="searchrow_product_title">18sp</dimen>
-    <dimen name="searchrow_product_price">23sp</dimen>
+    <dimen name="searchrow_product_title">12sp</dimen>
+    <dimen name="searchrow_product_price">16sp</dimen>
     <dimen name="searchrow_img_height">70dp</dimen>
     <dimen name="searchrow_img_width">70dp</dimen>
 
     <dimen name="itemdetail_img_height">250dp</dimen>
     <dimen name="itemdetail_img_width">250dp</dimen>
 
+    <dimen name="itemdetail_textsize">16sp</dimen>
+    <dimen name="itemdetail_firstcolumn_width">140dp</dimen>
 </resources>

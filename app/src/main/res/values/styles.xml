@@ -5,10 +5,18 @@
         <!-- Customize your theme here. -->
     </style>
 
-    <style name="wrap_content">
-        <item name="android:layout_width">wrap_content</item>
+    <style name="first_column">
+        <item name="android:layout_width">@dimen/itemdetail_firstcolumn_width</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:textSize">22sp</item>
+        <item name="android:textSize">@dimen/itemdetail_textsize</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+
+    <style name="second_column">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">@dimen/itemdetail_textsize</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textColor">@color/black</item>
     </style>

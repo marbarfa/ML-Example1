@@ -12,6 +12,9 @@
     <dimen name="searchrow_img_height">80dp</dimen>
     <dimen name="searchrow_img_width">80dp</dimen>
 
+    <dimen name="itemdetail_textsize">20sp</dimen>
+    <dimen name="itemdetail_firstcolumn_width">100dp</dimen>
+
     <dimen name="itemdetail_img_height">400dp</dimen>
     <dimen name="itemdetail_img_width">400dp</dimen>
 

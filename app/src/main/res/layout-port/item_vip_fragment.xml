@@ -11,11 +11,11 @@
                   android:orientation="vertical">
 
 
-        <TextView style="@style/wrap_content"
+        <TextView style="@style/first_column"
                   android:id="@+id/item_title"
                   android:text="item_title"
                   android:layout_gravity="center_horizontal"
-                  android:textColor="@color/grey"
+                  android:textColor="@color/dgrey"
                   android:layout_marginTop="13dp" android:layout_height="wrap_content"
                   android:layout_width="wrap_content"
                   android:textSize="18sp"/>
@@ -23,8 +23,8 @@
 
         <ImageView
                 android:id="@+id/item_image"
-                android:layout_width="400dp"
-                android:layout_height="400dp"
+                android:layout_width="@dimen/itemdetail_img_width"
+                android:layout_height="@dimen/itemdetail_img_height"
                 android:scaleType="centerInside"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="10dp"
@@ -34,17 +34,30 @@
 
         <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content"
                       android:layout_marginTop="20dp">
-            <TextView style="@style/wrap_content" android:text="Precio: "/>
 
-            <TextView style="@style/wrap_content"
-                      android:text="$ "
-                      android:layout_marginLeft="100dp"
-                      android:textColor="@color/blue"/>
+            <TextView
+                    style="@style/first_column"
+                    android:text="Precio: "/>
 
-            <TextView style="@style/wrap_content"
-                      android:id="@+id/item_price"
-                      android:text="item_price"
-                      android:textColor="@color/blue"/>
+            <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="$ "
+                        android:textColor="@color/blue"/>
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/item_price"
+                        android:text="item_price"
+                        android:textColor="@color/blue"/>
+
+            </LinearLayout>
         </LinearLayout>
 
 
@@ -53,46 +66,61 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
-            <TextView style="@style/wrap_content"
+            <TextView style="@style/first_column"
                       android:text="Bookmark:"/>
 
             <Button
                     android:id="@+id/item_bookmark"
                     android:layout_width="25dp"
                     android:layout_height="25dp"
-                    android:layout_marginLeft="75dp"
                     android:background="@drawable/drawable_bookmarks"/>
 
         </LinearLayout>
 
 
-        <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content">
-            <TextView style="@style/wrap_content" android:text="Status: "/>
+        <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+            <TextView
+                    style="@style/first_column"
+                    android:text="Status: "/>
+
             <TextView
                     android:id="@+id/item_status"
-                    style="@style/wrap_content"
-                    android:layout_marginLeft="100dp"
+                    style="@style/second_column"
                     android:text="status"/>
+
         </LinearLayout>
 
-        <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content">
-            <TextView style="@style/wrap_content" android:text="Cantidad vendidas: "/>
+        <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+            <TextView
+                    style="@style/first_column"
+                    android:text="Cantidad vendidas: "/>
+
             <TextView
                     android:id="@+id/item_soldAmount"
-                    style="@style/wrap_content"
-                    android:layout_marginLeft="25dp"
+                    style="@style/second_column"
                     android:text="sold_amount"/>
+
         </LinearLayout>
 
-        <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content">
-            <TextView style="@style/wrap_content" android:text="Cantidad Vendida: "/>
+        <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+            <TextView
+                    style="@style/first_column"
+                    android:text="Cantidad Vendida: "/>
+
             <TextView
                     android:id="@+id/item_location"
-                    style="@style/wrap_content"
-                    android:text="sold_quantity"
-                    android:layout_marginLeft="30dp"/>
+                    style="@style/second_column"
+                    android:text="sold_quantity"/>
+
         </LinearLayout>
-
-
     </LinearLayout>
 </ScrollView>

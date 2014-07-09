@@ -26,8 +26,8 @@
                 android:layout_width="@dimen/itemdetail_img_width"
                 android:layout_height="@dimen/itemdetail_img_height"
                 android:scaleType="centerInside"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="5dp"
                 android:layout_gravity="center_horizontal"
                 android:src="@drawable/placeholder"
                 android:textStyle="bold"/>

@@ -6,10 +6,11 @@
     <dimen name="main_product_selection_textsize">14sp</dimen>
 
 
-    <dimen name="searchrow_product_title">16sp</dimen>
-    <dimen name="searchrow_product_price">22sp</dimen>
-
-    <dimen name="searchrow_img_heigh">80dp</dimen>
+    <dimen name="searchrow_height">120dp</dimen>
+    <dimen name="searchrow_product_title">21sp</dimen>
+    <dimen name="searchrow_product_price">25sp</dimen>
+    <dimen name="searchrow_img_height">80dp</dimen>
     <dimen name="searchrow_img_width">80dp</dimen>
+
 
 </resources>

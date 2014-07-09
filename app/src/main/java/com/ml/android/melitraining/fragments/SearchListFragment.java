@@ -30,9 +30,9 @@ import java.util.ArrayList;
  */
 public class SearchListFragment extends android.support.v4.app.Fragment {
 
-    private int offset = 0;
-    private int limit = 15;
-    private SearchAdapter listAdapter;
+    private static int offset = 0;
+    private static int limit = 15;
+    private static SearchAdapter listAdapter;
 
     private AbsListView mListView;
     private ProgressBar progressBar;

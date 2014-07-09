@@ -183,7 +183,9 @@ public class ItemVIPFragment extends Fragment {
                     .with(getActivity())
                     .load(itemDTO.pictures.get(0).url)
                     .placeholder(R.drawable.placeholder)
-                    .fit()
+//                    .fit()
+                    .resize(getResources().getDimensionPixelSize(R.dimen.itemdetail_img_width),
+                            getResources().getDimensionPixelSize(R.dimen.itemdetail_img_height))
                     .centerCrop()
                     .into(img);
         }

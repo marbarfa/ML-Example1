@@ -1,15 +1,13 @@
 <resources>
-    <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="activity_horizontal_margin">5dp</dimen>
     <dimen name="activity_vertical_margin">5dp</dimen>
 
     <dimen name="main_product_selection_textsize">20sp</dimen>
 
+
+    <dimen name="searchrow_height">120dp</dimen>
     <dimen name="searchrow_product_title">21sp</dimen>
     <dimen name="searchrow_product_price">25sp</dimen>
-
-    <dimen name="searchrow_img_heigh">50dp</dimen>
+    <dimen name="searchrow_img_height">80dp</dimen>
     <dimen name="searchrow_img_width">80dp</dimen>
-
-
 </resources>

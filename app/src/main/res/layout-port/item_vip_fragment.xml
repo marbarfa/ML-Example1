@@ -1,98 +1,98 @@
 <?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:id="@+id/item_detail_port_fragment"
-              android:layout_marginTop="5dp"
-              android:layout_marginBottom="5dp"
-              android:orientation="vertical">
+    <LinearLayout android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:id="@+id/item_detail_port_fragment"
+                  android:layout_marginTop="5dp"
+                  android:layout_marginBottom="5dp"
+                  android:orientation="vertical">
 
-
-
-
-    <TextView style="@style/wrap_content"
-              android:id="@+id/item_title"
-              android:text="item_title"
-              android:layout_gravity="center_horizontal"
-              android:textColor="@color/grey"
-              android:layout_marginTop="13dp" android:layout_height="wrap_content" android:layout_width="wrap_content"
-              android:textSize="18sp"/>
-
-
-    <ImageView
-            android:id="@+id/item_image"
-            android:layout_width="400dp"
-            android:layout_height="400dp"
-            android:scaleType="centerInside"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_gravity="center_horizontal"
-            android:src="@drawable/placeholder"
-            android:textStyle="bold"/>
-
-    <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content"
-                  android:layout_marginTop="20dp">
-        <TextView style="@style/wrap_content" android:text="Precio: "/>
 
         <TextView style="@style/wrap_content"
-                  android:text="$ "
-                  android:layout_marginLeft="100dp"
-                  android:textColor="@color/blue" />
+                  android:id="@+id/item_title"
+                  android:text="item_title"
+                  android:layout_gravity="center_horizontal"
+                  android:textColor="@color/grey"
+                  android:layout_marginTop="13dp" android:layout_height="wrap_content"
+                  android:layout_width="wrap_content"
+                  android:textSize="18sp"/>
 
-        <TextView style="@style/wrap_content"
-                  android:id="@+id/item_price"
-                  android:text="item_price"
-                  android:textColor="@color/blue" />
+
+        <ImageView
+                android:id="@+id/item_image"
+                android:layout_width="400dp"
+                android:layout_height="400dp"
+                android:scaleType="centerInside"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_gravity="center_horizontal"
+                android:src="@drawable/placeholder"
+                android:textStyle="bold"/>
+
+        <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content"
+                      android:layout_marginTop="20dp">
+            <TextView style="@style/wrap_content" android:text="Precio: "/>
+
+            <TextView style="@style/wrap_content"
+                      android:text="$ "
+                      android:layout_marginLeft="100dp"
+                      android:textColor="@color/blue"/>
+
+            <TextView style="@style/wrap_content"
+                      android:id="@+id/item_price"
+                      android:text="item_price"
+                      android:textColor="@color/blue"/>
+        </LinearLayout>
+
+
+        <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+            <TextView style="@style/wrap_content"
+                      android:text="Bookmark:"/>
+
+            <Button
+                    android:id="@+id/item_bookmark"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_marginLeft="75dp"
+                    android:background="@drawable/drawable_bookmarks"/>
+
+        </LinearLayout>
+
+
+        <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content">
+            <TextView style="@style/wrap_content" android:text="Status: "/>
+            <TextView
+                    android:id="@+id/item_status"
+                    style="@style/wrap_content"
+                    android:layout_marginLeft="100dp"
+                    android:text="status"/>
+        </LinearLayout>
+
+        <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content">
+            <TextView style="@style/wrap_content" android:text="Cantidad vendidas: "/>
+            <TextView
+                    android:id="@+id/item_soldAmount"
+                    style="@style/wrap_content"
+                    android:layout_marginLeft="25dp"
+                    android:text="sold_amount"/>
+        </LinearLayout>
+
+        <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content">
+            <TextView style="@style/wrap_content" android:text="Cantidad Vendida: "/>
+            <TextView
+                    android:id="@+id/item_location"
+                    style="@style/wrap_content"
+                    android:text="sold_quantity"
+                    android:layout_marginLeft="30dp"/>
+        </LinearLayout>
+
+
     </LinearLayout>
-
-
-    <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-        <TextView style="@style/wrap_content"
-                  android:text="Bookmark:" />
-
-        <Button
-                android:id="@+id/item_bookmark"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:layout_marginLeft="75dp"
-                android:background="@drawable/drawable_bookmarks"/>
-
-    </LinearLayout>
-
-
-
-
-    <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content">
-        <TextView style="@style/wrap_content" android:text="Status: "/>
-        <TextView
-                android:id="@+id/item_status"
-                style="@style/wrap_content"
-                android:layout_marginLeft="100dp"
-                android:text="status" />
-    </LinearLayout>
-
-    <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content">
-        <TextView style="@style/wrap_content" android:text="Cantidad vendidas: "/>
-        <TextView
-                android:id="@+id/item_soldAmount"
-                style="@style/wrap_content"
-                android:layout_marginLeft="25dp"
-                android:text="sold_amount"/>
-    </LinearLayout>
-
-    <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content">
-        <TextView style="@style/wrap_content" android:text="Cantidad Vendida: "/>
-        <TextView
-                android:id="@+id/item_location"
-                style="@style/wrap_content"
-                android:text="sold_quantity"
-                android:layout_marginLeft="30dp" />
-    </LinearLayout>
-
-
-</LinearLayout>
+</ScrollView>

@@ -132,12 +132,13 @@ public class SearchAdapter implements ListAdapter {
                     .with(context)
                     .load(resultRow.thumbnail)
                     .placeholder(R.drawable.placeholder)
-                    .fit()
-//                .resize(100, 100)
+//                    .fit()
+                .resize(context.getResources().getDimensionPixelSize(R.dimen.searchrow_img_width),
+                        context.getResources().getDimensionPixelSize(R.dimen.searchrow_img_height))
                     .centerCrop()
                     .into(holder.thumbnail);
         }catch (Throwable t ){
-            Log.e("SearchAdapter", "Error loading image", t);
+            Log.e("SearchAdapter", "Error loading image, empty path.");
         }
 
         return rowView;

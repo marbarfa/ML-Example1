@@ -10,6 +10,8 @@ import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
 import com.ml.android.melitraining.database.entities.Bookmark;
 
+import java.io.File;
+import java.io.IOException;
 import java.sql.SQLException;
 
 
@@ -27,8 +29,22 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     public DatabaseHelper(Context context) {
         super(context,
                 Environment.getExternalStorageDirectory().getAbsolutePath() +
-                        "/melitraininig/db.sqlite", null, 1
+                        "/melitraining/db.sqlite", null, 1
         );
+        createDB();
+    }
+
+    private void createDB(){
+        File f = new File(Environment.getExternalStorageDirectory().getAbsolutePath() +
+                "/melitraining/db.sqlite");
+        if (f.exists()){
+            f.mkdirs();
+            try {
+                f.createNewFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
 

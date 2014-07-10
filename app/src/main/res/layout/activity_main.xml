@@ -9,27 +9,34 @@
                 tools:context="com.ml.android.melitraining.app.MainActivity">
 
 
+    <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content"
+                  android:orientation="horizontal"
+                  android:layout_centerInParent="true"
+                  android:id="@+id/edit_container"
+                  android:gravity="center_vertical">
+
+        <EditText android:layout_width="200dp"
+                  android:layout_height="50dp"
+                  android:id="@+id/input"
+                  android:editable="false"/>
+
+        <ImageView android:layout_width="60dp" android:layout_height="60dp"
+                   android:layout_marginLeft="5dp"
+                   android:src="@drawable/ic_action_bar_search"
+                   android:scaleType="centerInside"/>
+
+    </LinearLayout>
+
+
     <TextView
             android:text="@string/txt_producto_a_buscar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/black"
             android:textSize="@dimen/main_product_selection_textsize"
-            android:id="@+id/text1" android:layout_above="@+id/input" android:layout_centerHorizontal="true"
-            android:layout_marginBottom="5dp"/>
+            android:id="@+id/text1"
+            android:layout_marginRight="5dp"
+            android:layout_centerVertical="true" android:layout_toLeftOf="@+id/edit_container"/>
 
-
-    <AutoCompleteTextView android:layout_width="fill_parent"
-              android:layout_height="50dp"
-              android:id="@+id/input"
-              android:layout_centerVertical="true" android:layout_toLeftOf="@+id/button1"/>
-
-
-    <ImageView android:layout_width="40dp"
-               android:layout_height="40dp"
-               android:src="@drawable/ic_action_bar_search"
-               android:id="@+id/button1"
-               android:layout_alignBottom="@+id/input" android:layout_alignParentRight="true"
-               android:layout_alignTop="@+id/input"/>
 
 </RelativeLayout>

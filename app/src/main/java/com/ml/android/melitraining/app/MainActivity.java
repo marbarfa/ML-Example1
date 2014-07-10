@@ -12,7 +12,6 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
 import android.view.View;
-import android.widget.AutoCompleteTextView;
 import android.widget.Toast;
 import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.Menu;
@@ -31,6 +30,9 @@ public class MainActivity extends SherlockActivity {
     private static final long REPEAT_TIME = 1000 * 30;
     private static final String SEARCH_QUERY_KEY = "SEARCH_QUERY";
 
+    private SearchView searchView;
+    private String lastQuery = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,21 +41,10 @@ public class MainActivity extends SherlockActivity {
         Log.i("MAIN-TRAINING", "External Absolute Path: "+s);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        findViewById(R.id.button1).setOnClickListener(new android.view.View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String searchStr = ((AutoCompleteTextView) findViewById(R.id.input)).getText().toString();
-                saveSearchQuery(searchStr);
-                searchAction(searchStr);
-            }
-        });
+
         Picasso.with(this).setDebugging(true);
 
-        String lastQuery = getSearchQuery();
-        if (lastQuery != null){
-            ((AutoCompleteTextView)findViewById(R.id.input)).setCompletionHint(lastQuery);
-        }
-
+        searchView = new SearchView(this);
         startBookmarksService();
     }
 
@@ -93,7 +84,18 @@ public class MainActivity extends SherlockActivity {
         // Inflate the menu items for use in the action bar
         getSupportMenuInflater().inflate(R.menu.home_menu, menu);
         setupSearchActionbar(menu);
+
+        setupSearchActions(menu.findItem(R.id.search));
         return super.onCreateOptionsMenu(menu);
+    }
+
+    private void setupSearchActions(final MenuItem menuItem){
+        findViewById(R.id.input).setOnClickListener(new android.view.View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                 menuItem.expandActionView();
+            }
+        });
     }
 
 
@@ -106,7 +108,6 @@ public class MainActivity extends SherlockActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.search: {
-//                 searchAction();
                 return false;
             }
             default:
@@ -117,8 +118,8 @@ public class MainActivity extends SherlockActivity {
 
     private void setupSearchActionbar(final Menu menu) {
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-        menu.findItem(R.id.search).setActionView(new SearchView(this));
-        SearchView searchView = (SearchView) menu.findItem(R.id.search).getActionView();
+        menu.findItem(R.id.search).setActionView(searchView);
+
         searchView.setQueryHint("Buscar...");
         SearchableInfo info = searchManager.getSearchableInfo(getComponentName());
         searchView.setSearchableInfo(info);
@@ -150,12 +151,26 @@ public class MainActivity extends SherlockActivity {
             }
         });
 
+        searchView.setOnSearchClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                   setLastQuery();
+            }
+        });
+    }
+
+    private void setLastQuery(){
+        if (lastQuery == null){
+            lastQuery = getSearchQuery();
+        }
+        searchView.setQuery(lastQuery, false);
     }
 
 
     private void searchAction(String query) {
         ConnectivityManager connMgr = (ConnectivityManager) getSystemService(MainActivity.this.CONNECTIVITY_SERVICE);
         if (HttpUtils.isConnected(connMgr)) {
+            saveSearchQuery(query);
             android.content.Intent i = new android.content.Intent(MainActivity.this, SearchResultActivity.class);
             i.putExtra("search_string", query);
             startActivity(i);

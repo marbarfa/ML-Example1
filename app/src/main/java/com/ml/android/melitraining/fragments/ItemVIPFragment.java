@@ -73,7 +73,8 @@ public class ItemVIPFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 onItemBookmark.apply(itemDTO);
-                bookmarkItem();
+                itemBookmark.setSelected(!itemBookmark.isSelected());
+                updateBookmarkItem();
             }
         });
 
@@ -88,8 +89,7 @@ public class ItemVIPFragment extends Fragment {
         return view;
     }
 
-    private void bookmarkItem() {
-        itemBookmark.setSelected(!itemBookmark.isSelected());
+    private void updateBookmarkItem() {
         if (itemBookmark.isSelected()) {
             itemBookmark.setBackgroundResource(android.R.drawable.star_big_on);
         } else {
@@ -192,7 +192,11 @@ public class ItemVIPFragment extends Fragment {
 
         Bookmark b = bookmarkDAO.getBookmarkByItem(itemDTO.id);
         if (b != null) {
-            bookmarkItem();
+            itemBookmark.setSelected(true);
+            updateBookmarkItem();
+        }else{
+            itemBookmark.setSelected(false);
+            updateBookmarkItem();
         }
     }
 

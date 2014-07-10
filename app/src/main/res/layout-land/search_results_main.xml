@@ -14,14 +14,14 @@
             android:id="@+id/fragment_search_list"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="0.7"
+            android:layout_weight="0.65"
             class="com.ml.android.melitraining.fragments.SearchListFragment"/>
 
     <fragment
             android:id="@+id/item_framgment_detail"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="0.3"
+            android:layout_weight="0.35"
             class="com.ml.android.melitraining.fragments.ItemVIPFragment"/>
 
 </LinearLayout>
